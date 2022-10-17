@@ -6,6 +6,13 @@ in
 {
   home.username = "${user}";
   home.homeDirectory = "/home/${user}";
+  home.packages = with pkgs; [
+    cachix
+    emacsPgtkNativeComp
+    htop
+    pandoc
+    rustup
+  ];
 
   programs.home-manager.enable = true;
   programs.fish = {
@@ -67,12 +74,5 @@ in
     ];
   } ;
 
-  home.packages = with pkgs; [
-    cachix
-    emacsPgtkNativeComp
-    htop
-    pandoc
-    rustup
-  ];
   home.stateVersion = "22.11";
 }
