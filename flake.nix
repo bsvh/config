@@ -23,8 +23,6 @@
         config.allowUnfree = true;
         overlays = [ 
           inputs.emacs-overlay.overlay
-          nixpkgs.legacyPackages.${system}.callPackage
-            ./nix/overlays/ligatured-hack.nix {};
         ];
       };
     in {

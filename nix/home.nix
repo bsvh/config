@@ -11,6 +11,7 @@ in
     cachix
     emacsPgtkNativeComp
     hack-font
+    (import ./nix/pkgs/hack-font-ligatured { inherit pkgs; })
     htop
     pandoc
     rustup
