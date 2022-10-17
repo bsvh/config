@@ -14,6 +14,25 @@ in
       mkcd = "mkdir -p $argv[1] && cd $argv[1]";
     }; 
   };
+  programs.gpg = {
+    enable = true;
+    publicKeys = [
+      {
+        source = ./gpg/pubkey_rsa.asc;
+        trust = "ultimate";
+      }
+      {
+        source = ./gpg/pubkey_curve25519.asc;
+        trust = "ultimate";
+      }
+    ];
+    settings = {
+    };
+    scdaemonSettings = {
+      pcsc-shared = true;
+      card-timeout = 5;
+    };
+  };
   programs.neovim = {
     enable = true;
     withPython3 = true;
@@ -66,6 +85,12 @@ in
       vim-tmux-navigator
     ];
   } ;
+
+  services.gpg-agent = {
+    enable = true;
+    enableScDaemon = true;
+    enableSshSupport = true;
+  };
 
   home.packages = with pkgs; [
     cachix
