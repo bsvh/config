@@ -13,6 +13,18 @@ in
     pandoc
     rustup
   ];
+  home.file."gpg.conf" = {
+    source = ../gnupg/gpg.conf;
+    target = ".gnupg/gpg.conf";
+  };
+  home.file."gpg-agent.conf" = {
+    source = ../gnupg/gpg-agent.conf;
+    target = ".gnupg/gpg-agent.conf";
+  };
+  home.file."scdaemon.conf" = {
+    source = ../gnupg/scdaemon.conf;
+    target = ".gnupg/scdaemon.conf";
+  };
 
   programs.home-manager.enable = true;
   programs.fish = {
