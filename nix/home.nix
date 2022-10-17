@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 let
   user = "bsvh";
@@ -39,6 +39,25 @@ in
   programs.starship = {
     enable = true;
     enableFishIntegration = true;
+    settings = {
+      format = lib.concatStrings [
+        "[┌───────────────────> ](bold green)"
+        "$all"
+        "$line_break"
+        "[│](bold green) $directory"
+        "$line_break"
+        "[└─$character](bold green) "
+      ];
+      continuation_prompt = "▶▶";
+      directory = {
+        truncation_length = 5;
+        truncation_symbol = "…/";
+      };
+      character = {
+        success_symbol = ">";
+        error_symbol = ">";
+      };
+    };
   };
   programs.tmux = {
     enable = true;
