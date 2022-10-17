@@ -69,18 +69,17 @@
 (add-to-list 'default-frame-alist '(width . 90))
 
 ;; Setup fonts
-(set-face-attribute 'default nil :family "Hack" :height 110)
-(set-face-attribute 'fixed-pitch nil :family "Hack" :height 1.0)
-(set-face-attribute 'variable-pitch nil :family "Alegreya" :height 1.0)
+(set-face-attribute 'default nil :family "Hack FC Ligatured" :height 120)
+(set-face-attribute 'fixed-pitch nil :family "Hack FC Ligatured" :height 1.0)
+(set-face-attribute 'variable-pitch nil :family "Montserrat" :height 1.0)
 (set-face-attribute 'mode-line nil :family "Hack" :height 0.8)
 (set-fontset-font t 'symbol (font-spec :family "Noto Color Emoji") nil 'prepend)
 
 ;; Set wrap to 80 chars
 (setq-default fill-column 80)
-(setq-default visual-fill-column-center-text t)
+;;(setq-default visual-fill-column-center-text t)
 (add-hook 'text-mode-hook 'visual-line-mode)
-(setq-default visual-fill-column-center-text t)
-(setq-default visual-fill-column-width 80)
+;;(setq-default visual-fill-column-center-text t)
 (add-hook 'visual-line-mode-hook #'visual-fill-column-mode)
 
 ;; Prevent GUI from zombieing out 
@@ -88,6 +87,8 @@
 
 ;; Overwrite selection when typing
 (delete-selection-mode 1)
+
+(setq-default line-spacing 0.1)
 
 ;; Indentation for paragraphs
 
@@ -119,6 +120,7 @@
        org-bullets
        org-modern
        ox-epub
+       ox-hugo
        poet-theme
        pdf-tools
        python-black
@@ -154,6 +156,14 @@
 
 
 (require 'org-protocol)
+
+(use-package treemacs
+  :ensure t
+  :defer t
+  :init
+  (with-eval-after-load 'winum
+    (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
+  )
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -208,10 +218,10 @@
   :mode (("\\.org$" . org-mode))
   :config
   ;(add-hook 'auto-save-hook 'org-save-all-org-buffers)
-  (setq org-startup-indented t)
+  ;;(setq org-startup-indented f)
   (setq org-indent-indentation-per-level 1)
   (setq org-adapt-indentation nil)
-  (setq org-hide-leading-starts t)
+  ;;(setq org-hide-leading-starts f)
   (setq org-hide-emphasis-markers t)
   (setq org-preview-latex-default-process 'dvisvgm)
   (setq org-preview-latex-image-directory "~/.cache/org-latex-images/")
@@ -222,7 +232,7 @@
   (setq org-log-done 'time)
   
   (setq org-agenda-files '("~/Documents/Org/inbox.org"
-                         "~/Documents/Org/gtd.org"
+                         "~/Documents/Org/projects.org"
                          "~/Documents/Org/tickler.org"))
   (defun transform-square-brackets-to-round-ones(string-to-transform)
     "Transforms [ into ( and ] into ), other chars left unchanged."
@@ -248,6 +258,9 @@
 				("b" "Add book to reading list" entry
 				 (file+headline "~/Documents/Org/readinglist.org" "Reading List")
 				 "* %^{Title} by %^{Author} \nAdded On: %u")
+				("S" "Sell item on eBay" entry
+				 (file+headline "~/Documents/Org/projects.org" "Sell on Ebay")
+				 "* TODO %^{Item} [0\%] \n** TODO Research market value :RESEARCH: \n** TODO Determing shipping costs :RESEARCH: \n** TODO Photograph items \n** TODO Make listing \n** WAITING Sell item \n** WAITING Ship item")
 				("a" "Add to Activity Log")
 				("aw" "Walk" entry
 				 (file+olp+datetree "~/Documents/Org/fitness.org" "Activity Log")
@@ -256,7 +269,7 @@
 				 (file+olp+datetree "~/Documents/Org/fitness.org" "Activity Log")
 				 "* Run - Distance: %^{Distance (m)}m, Time: %^{Time} \nNotes: %?")
 				))
-  (setq org-refile-targets '(("~/Documents/Org/gtd.org" :maxlevel . 3)
+  (setq org-refile-targets '(("~/Documents/Org/projects.org" :maxlevel . 3)
                              ("~/Documents/Org/someday.org" :level . 1)
 			     ("~/Documents/Org/readinglist.org" :maxlevel . 2)
                            ("~/Documents/Org/tickler.org" :maxlevel . 2)))
@@ -297,6 +310,8 @@
   (org-defkey org-mode-map (kbd "C-c I") #'org-insert-last-stored-link)
   (org-defkey org-mode-map (kbd "C-c p") 'my-indent-first)
   :init
+  (add-hook 'org-mode-hook #'org-modern-mode)
+  (add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
   '(require 'ox-epub nil t)
   '(require 'ox-publish)
@@ -305,6 +320,10 @@
    '((emacs-lisp . t)
      (shell . t)
      (python . t))))
+(use-package ox-hugo
+  :ensure t
+  :pin melpa
+  :after ox)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; PDF                                                                       ;;
@@ -340,7 +359,7 @@
    '("046e442b73846ae114d575a51be9edb081a1ef29c05ae5e237d5769ecfd70c2e" default))
  '(org-export-backends '(ascii html icalendar latex md odt gemini))
  '(package-selected-packages
-   '(org-anki anki-editor modus-operandi-theme ox-gemini org-modern yaml-mode nix-mode dbus-codegen rainbow-delimeters company paredit rainbow-delimiters pdf-tools adoc-mode pyvenv lsp-mode org-contrib org-bullets olivetti valign python-black elpher ox-epub mixed-pitch esup treemacs-all-the-icons writeroom-mode writegood-mode poet-theme))
+   '(ox-hugo vscode-icon all-the-icons-dired dired-sidebar org-anki anki-editor modus-operandi-theme ox-gemini org-modern yaml-mode nix-mode dbus-codegen rainbow-delimeters company paredit rainbow-delimiters pdf-tools adoc-mode pyvenv lsp-mode org-contrib org-bullets olivetti valign python-black elpher ox-epub mixed-pitch esup treemacs-all-the-icons writeroom-mode writegood-mode poet-theme))
  '(tool-bar-mode nil)
  '(warning-suppress-log-types '((comp)))
  '(warning-suppress-types '((emacs) (emacs) (comp))))
@@ -349,18 +368,18 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(markdown-header-face-1 ((t (:inherit default :foreground "#000000" :family "Alegreya SC" :weight normal :height 1.0))))
- '(markdown-header-face-2 ((t (:inherit default :foreground "#000000" :family "Alegreya SC" :weight normal :height 1.0))))
- '(markdown-header-face-3 ((t (:inherit default :foreground "#000000" :family "Alegreya SC" :weight normal :height 1.0))))
- '(markdown-header-face-4 ((t (:inherit default :foreground "#000000" :family "Alegreya SC" :weight normal :height 1.0))))
- '(markdown-header-face-5 ((t (:inherit default :foreground "#000000" :family "Alegreya SC" :weight normal :height 1.0))))
+ '(markdown-header-face-1 ((t (:inherit default :foreground "#000000" :family "Spectral SC" :weight normal :height 1.0))))
+ '(markdown-header-face-2 ((t (:inherit default :foreground "#000000" :family "Spectral SC" :weight normal :height 1.0))))
+ '(markdown-header-face-3 ((t (:inherit default :foreground "#000000" :family "Spectral SC" :weight normal :height 1.0))))
+ '(markdown-header-face-4 ((t (:inherit default :foreground "#000000" :family "Spectral SC" :weight normal :height 1.0))))
+ '(markdown-header-face-5 ((t (:inherit default :foreground "#000000" :family "Spectral SC" :weight normal :height 1.0))))
  '(org-document-title ((t (:inherit default :foreground "#B71C1C" :underline "#aaaaaa" :height 1.0))))
  '(org-hide ((t (:inherit fixed-pitch :foreground "#e1d9c2"))))
- '(org-level-1 ((t (:inherit default :foreground "#770b0b" :family "Alegreya SC" :weight semi-bold :height 1.3))))
- '(org-level-2 ((t (:inherit default :foreground "#770b0b" :family "Alegreya SC" :weight semi-bold :height 1.0))))
- '(org-level-3 ((t (:inherit default :foreground "#770b0b" :family "Alegreya" :weight semi-bold :height 1.0))))
- '(org-level-4 ((t (:inherit default :foreground "#770b0b" :family "Alegreya SC" :height 1.0))))
- '(org-level-5 ((t (:inherit default :foreground "#770b0b" :family "Alegreya" :height 1.0)))))
+ '(org-level-1 ((t (:inherit default :foreground "#770b0b" :family "Montserrat" :weight medium :height 1.6))))
+ '(org-level-2 ((t (:inherit default :foreground "#770b0b" :family "Montserrat" :weight medium :height 1.4))))
+ '(org-level-3 ((t (:inherit default :foreground "#770b0b" :family "Montserrat" :weight medium :height 1.2))))
+ '(org-level-4 ((t (:inherit default :foreground "#770b0b" :family "Montserrat" :weight medium :height 1.0))))
+ '(org-level-5 ((t (:inherit default :foreground "#770b0b" :family "Montserrat" :weight medium :height 0.9)))))
 (define-advice org-indent-set-line-properties (:override (level indentation &optional heading) sensible-indentation)
   (let* ((line (aref (pcase heading
                (`nil org-indent--text-line-prefixes)
