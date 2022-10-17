@@ -2,6 +2,16 @@
 
 let
   user = "bsvh";
+  tex = (pkgs.texlive.combine {
+    inherit (pkgs.texlive) scheme-basic
+    dvisvgm
+    dvipng
+    wrapfig
+    amsmath
+    ulem
+    hyperref
+    capt-of;
+  });
 in
 {
   fonts.fontconfig.enable = true;
@@ -10,11 +20,13 @@ in
   home.packages = with pkgs; [
     cachix
     emacsPgtkNativeComp
+    fd
     hack-font
-    (import ./nix/pkgs/hack-font-ligatured { inherit pkgs; })
     htop
     pandoc
+    ripgrep
     rustup
+    tex
   ];
   home.file."gpg.conf" = {
     source = ../gnupg/gpg.conf;
@@ -83,6 +95,9 @@ in
   };
   programs.tmux = {
     enable = true;
+    extraConfig = ''
+      set -g mouse on
+    '';
     plugins = with pkgs.tmuxPlugins; [
       sensible
       vim-tmux-navigator
