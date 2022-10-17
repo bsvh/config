@@ -4,11 +4,13 @@ let
   user = "bsvh";
 in
 {
+  fonts.fontconfig.enable = true;
   home.username = "${user}";
   home.homeDirectory = "/home/${user}";
   home.packages = with pkgs; [
     cachix
     emacsPgtkNativeComp
+    hack-font
     htop
     pandoc
     rustup
@@ -85,6 +87,19 @@ in
       vim-tmux-navigator
     ];
   } ;
+  programs.vscode = {
+    enable = true;
+    package = pkgs.vscodium;
+    extensions = with pkgs.vscode-extensions; [
+      matklad.rust-analyzer
+      redhat.vscode-yaml
+      vscodevim.vim
+    ];
+    userSettings = {
+      "editor.fontLigatures" = true;
+      "editor.fontFamily" = "'Hack', 'Droid Sans Mono', 'monospace', monospace";
+    };
+  };
 
   home.stateVersion = "22.11";
 }
