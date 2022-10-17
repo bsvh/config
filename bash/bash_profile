@@ -4,3 +4,5 @@
 if [ -f ~/.bashrc ]; then
 	. ~/.bashrc
 fi
+
+if [ -e /var/home/bsvh/.nix-profile/etc/profile.d/nix.sh ]; then . /var/home/bsvh/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
