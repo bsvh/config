@@ -17,10 +17,12 @@ in
   fonts.fontconfig.enable = true;
   home.username = "${user}";
   home.homeDirectory = "/home/${user}";
+
   home.packages = with pkgs; [
     cachix
     emacsPgtkNativeComp
     fd
+    gcc
     hack-font
     htop
     pandoc
@@ -28,6 +30,7 @@ in
     rustup
     tex
   ];
+
   home.file."gpg.conf" = {
     source = ../gnupg/gpg.conf;
     target = ".gnupg/gpg.conf";
@@ -39,6 +42,10 @@ in
   home.file."scdaemon.conf" = {
     source = ../gnupg/scdaemon.conf;
     target = ".gnupg/scdaemon.conf";
+  };
+
+  home.sessionVariables = {
+    NIXOS_OZONE_WL = "1";
   };
 
   programs.home-manager.enable = true;
@@ -111,10 +118,19 @@ in
       redhat.vscode-yaml
       vscodevim.vim
     ];
-    userSettings = {
-      "editor.fontLigatures" = true;
-      "editor.fontFamily" = "'Hack', 'Droid Sans Mono', 'monospace', monospace";
-    };
+   userSettings = {
+     "editor.fontLigatures" = true;
+     "editor.fontFamily" = "'Hack NF FC Ligatured', 'Hack', 'Droid Sans Mono', 'monospace', monospace";
+     "editor.inlayHints.enabled" = true;
+     "editor.formatOnSave" = true;
+     "editor.formatOnPaste" = true;
+     "workbench.colorCustomizations" = {
+       "[Default Dark+]" = {
+         "editorInlayHint.background" = "#1e1e1e";
+         "editorInlayHint.foreground" = "#6e6d6d";
+       };
+     };
+   };
   };
 
   home.stateVersion = "22.11";
