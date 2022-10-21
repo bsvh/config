@@ -14,17 +14,16 @@ let
   });
 in
 {
+
   fonts.fontconfig.enable = true;
   home.username = "${user}";
   home.homeDirectory = "/home/${user}";
-
   home.packages = with pkgs; [
     cachix
     emacsPgtkNativeComp
     fd
     gcc
     hack-font
-    helix
     htop
     nixgl.nixGLIntel
     pandoc
@@ -51,6 +50,10 @@ in
     NIXOS_OZONE_WL = "1";
   };
 
+  programs.helix.enable = true;
+  programs.helix.settings = {
+    theme = "autumn";
+  };
   programs.home-manager.enable = true;
   programs.fish = {
     enable = true;
@@ -73,7 +76,9 @@ in
       bold_italic_font = "auto";
       hide_window_decorations = true;
       window_padding_width = "6";
-
+      theme = "Monokai";
+      include =  "./theme.conf";
+      confirm_os_window_close = "0";
     };
   };
   programs.neovim = {
