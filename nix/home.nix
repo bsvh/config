@@ -22,6 +22,8 @@ in
     RUSTUP_HOME = "$HOME/.local/sdk/rust/rustup";
     CARGO_HOME = "$HOME/.local/sdk/rust/cargo";
     CARGO_ENV = "$HOME/.local/sdk/rust/cargo/env";
+    SSH_AGENT_PID = "";
+    SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/gnupg/S.gpg-agent.ssh";
   };
   home.packages = with pkgs; [
     anki
@@ -66,6 +68,10 @@ in
       pcsc-shared
       card-timeout 5
     '';
+  };
+  home.file."custom.sh" = {
+    source = ../bash_custom.sh;
+    target = ".bashrc.d/custom.sh";
   };
 
   home.sessionVariables = {
