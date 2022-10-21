@@ -13,9 +13,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixgl.url = "github:guibou/nixGL";
   };
 
-  outputs = { self, nixpkgs, home-manager, emacs-overlay, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, emacs-overlay, nixgl, ... }@inputs:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -23,6 +24,7 @@
         config.allowUnfree = true;
         overlays = [ 
           inputs.emacs-overlay.overlay
+          nixgl.overlay
         ];
       };
     in {

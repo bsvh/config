@@ -24,10 +24,13 @@ in
     fd
     gcc
     hack-font
+    helix
     htop
+    nixgl.nixGLIntel
     pandoc
     ripgrep
     rustup
+    rust-analyzer
     tex
   ];
 
@@ -54,6 +57,19 @@ in
     functions = {
       mkcd = "mkdir -p $argv[1] && cd $argv[1]";
     }; 
+  };
+  programs.kitty = {
+    enable = true;
+    settings = {
+      font_size = "12.0";
+      font_family = "Hack Nerd Font FC Ligatured";
+      bold_font = "auto";
+      italic_font = "auto";
+      bold_italic_font = "auto";
+      hide_window_decorations = true;
+      window_padding_width = "6";
+
+    };
   };
   programs.neovim = {
     enable = true;
