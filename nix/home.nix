@@ -18,6 +18,11 @@ in
   fonts.fontconfig.enable = true;
   home.username = "${user}";
   home.homeDirectory = "/home/${user}";
+  home.sessionVariables = {
+    RUSTUP_HOME = "$HOME/.local/sdk/rust/rustup";
+    CARGO_HOME = "$HOME/.local/sdk/rust/cargo";
+    CARGO_ENV = "$HOME/.local/sdk/rust/cargo/env";
+  };
   home.packages = with pkgs; [
     anki
     bacon
@@ -36,16 +41,31 @@ in
   ];
 
   home.file."gpg.conf" = {
-    source = ../gnupg/gpg.conf;
     target = ".gnupg/gpg.conf";
+    text = ''
+      no-comments
+      no-emit-version
+      no-greeting
+      keyid-format 0xlong
+      list-options show-uid-validity
+      verify-options show-uid-validity
+      with-fingerprint
+      use-agent
+    '';
   };
   home.file."gpg-agent.conf" = {
-    source = ../gnupg/gpg-agent.conf;
     target = ".gnupg/gpg-agent.conf";
+    text = ''
+      pinentry-program /usr/bin/pinentry-gnome3
+      enable-ssh-support
+    '';
   };
   home.file."scdaemon.conf" = {
-    source = ../gnupg/scdaemon.conf;
     target = ".gnupg/scdaemon.conf";
+    text = ''
+      pcsc-shared
+      card-timeout 5
+    '';
   };
 
   home.sessionVariables = {
