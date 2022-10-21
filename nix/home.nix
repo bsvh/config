@@ -58,6 +58,11 @@ in
       mkcd = "mkdir -p $argv[1] && cd $argv[1]";
     }; 
   };
+  programs.git = {
+    enable = true;
+    userName = "Brendan Van Hook";
+    userEmail = "brendan@vastactive.com";
+  };
   programs.kitty = {
     enable = true;
     settings = {
