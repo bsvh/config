@@ -197,9 +197,9 @@
   (setq org-cycle-separator-lines 1)
   (setq org-log-done 'time)
   
-  (setq org-agenda-files '("~/Documents/Org/inbox.org"
-                         "~/Documents/Org/projects.org"
-                         "~/Documents/Org/tickler.org"))
+  (setq org-agenda-files '("~/documents/org/inbox.org"
+                         "~/documents/org/projects.org"
+                         "~/documents/org/tickler.org"))
   (defun transform-square-brackets-to-round-ones(string-to-transform)
     "Transforms [ into ( and ] into ), other chars left unchanged."
     (concat 
@@ -207,38 +207,38 @@
   )
   (setq org-capture-templates '(
 				("t" "Todo [inbox]" entry
-				 (file+headline "~/Documents/Org/inbox.org" "Tasks")
+				 (file+headline "~/documents/org/inbox.org" "Tasks")
 				 "* TODO %i%?")
 				("T" "Tickler" entry
-                                 (file+headline "~/Documents/Org/tickler.org" "Tickler")
+                                 (file+headline "~/documents/org/tickler.org" "Tickler")
                                  "* TODO %^{Task} \n %^{Date}t \n %i" :time-prompt t)
 			        ("s" "Songs" entry
-			         (file+headline "~/Documents/Org/inbox.org" "Songs")
+			         (file+headline "~/documents/org/inbox.org" "Songs")
 			         "* TODO Download %^{Song} by %^{Artist}%?")
 				("p" "Protocol" entry
-				 (file+headline  "~/Documents/Org/inbox.org" "Web")
+				 (file+headline  "~/documents/org/inbox.org" "Web")
 				 "* %^{Title}\nSource: %u, %c\n #+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n\n%?")
 				("L" "Protocol Link" entry
-				 (file+headline "~/Documents/Org/inbox.org" "Web")
+				 (file+headline "~/documents/org/inbox.org" "Web")
 				 "* %? [[%:link][%(transform-square-brackets-to-round-ones \"%:description\")]] \nCaptured On: %U")
 				("b" "Add book to reading list" entry
-				 (file+headline "~/Documents/Org/readinglist.org" "Reading List")
+				 (file+headline "~/documents/org/readinglist.org" "Reading List")
 				 "* %^{Title} by %^{Author} \nAdded On: %u")
 				("S" "Sell item on eBay" entry
-				 (file+headline "~/Documents/Org/projects.org" "Sell on Ebay")
+				 (file+headline "~/documents/org/projects.org" "Sell on Ebay")
 				 "* TODO %^{Item} [0\%] \n** TODO Research market value :RESEARCH: \n** TODO Determing shipping costs :RESEARCH: \n** TODO Photograph items \n** TODO Make listing \n** WAITING Sell item \n** WAITING Ship item")
 				("a" "Add to Activity Log")
 				("aw" "Walk" entry
-				 (file+olp+datetree "~/Documents/Org/fitness.org" "Activity Log")
+				 (file+olp+datetree "~/documents/org/fitness.org" "Activity Log")
 				 "* Walk - Steps: %^{Steps}, Distance: %^{Distance (m)}m, Time: %^{Time}\nNotes: %?")
 				("ar" "Walk" entry
-				 (file+olp+datetree "~/Documents/Org/fitness.org" "Activity Log")
+				 (file+olp+datetree "~/documents/org/fitness.org" "Activity Log")
 				 "* Run - Distance: %^{Distance (m)}m, Time: %^{Time} \nNotes: %?")
 				))
-  (setq org-refile-targets '(("~/Documents/Org/projects.org" :maxlevel . 3)
-                             ("~/Documents/Org/someday.org" :level . 1)
-			     ("~/Documents/Org/readinglist.org" :maxlevel . 2)
-                           ("~/Documents/Org/tickler.org" :maxlevel . 2)))
+  (setq org-refile-targets '(("~/documents/org/projects.org" :maxlevel . 3)
+                             ("~/documents/org/someday.org" :level . 1)
+			     ("~/documents/org/readinglist.org" :maxlevel . 2)
+                           ("~/documents/org/tickler.org" :maxlevel . 2)))
   (setq org-todo-keywords '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
   
   (global-set-key (kbd "C-c l") #'org-store-link)
