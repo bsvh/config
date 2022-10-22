@@ -111,15 +111,10 @@
        move-text
        org-bullets
        org-modern
-       ox-epub
        poet-theme
-       pdf-tools
        python-black
        pyvenv
        rustic
-       treemacs
-       treemacs-all-the-icons
-       treemacs-icons-dired 
        use-package
        writegood-mode
        writeroom-mode))
