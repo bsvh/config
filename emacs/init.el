@@ -92,16 +92,6 @@
 
 (setq-default line-spacing 0.1)
 
-;; Indentation for paragraphs
-
-(defun my-indent-first ()
-    (interactive)
-    (put-text-property
-     1 (save-excursion (end-of-buffer)
-               (point))
-     'line-prefix "     "))
-
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Setup packages                                                            ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -309,8 +299,7 @@
 				        (interactive)
 				        (tab-to-tab-stop)))
   (org-defkey org-mode-map (kbd "C-c i") #'org-insert-link)
-  (org-defkey org-mode-map (kbd "C-c I") #'org-insert-last-stored-link)
-  (org-defkey org-mode-map (kbd "C-c p") 'my-indent-first)
+  (org-defkey org-mode-map (kbd "C-c I") #'org-insert-last-stored-link))
   :init
   (add-hook 'org-mode-hook #'org-modern-mode)
   (add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
