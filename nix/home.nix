@@ -21,9 +21,8 @@ in
   home.sessionVariables = {
     RUSTUP_HOME = "$HOME/.local/sdk/rust/rustup";
     CARGO_HOME = "$HOME/.local/sdk/rust/cargo";
-    CARGO_ENV = "$HOME/.local/sdk/rust/cargo/env";
-    SSH_AGENT_PID = "";
-    SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/gnupg/S.gpg-agent.ssh";
+    QT_QPA_PLATFORM = "wayland;xcb";
+    NIXOS_OZONE_WL = "1";
   };
   home.packages = with pkgs; [
     anki
@@ -73,9 +72,13 @@ in
     source = ../bash_custom.sh;
     target = ".bashrc.d/custom.sh";
   };
-
-  home.sessionVariables = {
-    NIXOS_OZONE_WL = "1";
+  home.file."init.el" = {
+    source = ../emacs/init.el;
+    target = ".config/emacs/init.el";
+  };
+  home.file."early-init.el" = {
+    source = ../emacs/early-init.el;
+    target = ".config/emacs/early-init.el";
   };
 
   programs.helix.enable = true;
