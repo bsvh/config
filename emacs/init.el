@@ -112,7 +112,6 @@
        org-bullets
        org-modern
        ox-epub
-       ox-hugo
        poet-theme
        pdf-tools
        python-black
@@ -148,26 +147,6 @@
 
 
 (require 'org-protocol)
-
-(use-package treemacs
-  :ensure t
-  :defer t
-  :init
-  (with-eval-after-load 'winum
-    (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
-  )
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Compile                                                                   ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(use-package compile
-  :config
-  (global-set-key [f5] (lambda ()
-                       (interactive)
-                       (let ((current-prefix-arg '(4)))
-                         (call-interactively 'compile)))))
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Useful For Editing Text
@@ -266,26 +245,6 @@
 			     ("~/Documents/Org/readinglist.org" :maxlevel . 2)
                            ("~/Documents/Org/tickler.org" :maxlevel . 2)))
   (setq org-todo-keywords '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
-  (setq org-publish-project-alist
-	'(
-	  ("articles"
-	   :base-directory "~/Documents/Writing/Articles/"
-	   :publishing-directory "~/Projects/VastActive.com/org-publish/articles"
-	   :publishing-function org-html-publish-to-html
-	   :recursive t
-	   :exclude ".*\.draft\.org"
-	   :auto-sitemap t
-	   :sitemap-title "Articles"
-	   :html-link-up "sitemap.html"
-	   :html-link-home "../index.html"
-	   )
-	  ("images"
-	   :base-directory "~/Documents/Writing/Images"
-	   :publishing-dir "~/Projects/VastActive.com/html/images"
-	   :recursive t
-	   :publishing-function org-publish-attachment
-	  )
-	  ))
   
   (global-set-key (kbd "C-c l") #'org-store-link)
   (global-set-key (kbd "C-c a") #'org-agenda)
@@ -311,15 +270,6 @@
    '((emacs-lisp . t)
      (shell . t)
      (python . t))))
-(use-package ox-hugo
-  :ensure t
-  :pin melpa
-  :after ox)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; PDF                                                                       ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(use-package pdf-tools)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Python                                                                    ;;
@@ -348,9 +298,9 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    '("046e442b73846ae114d575a51be9edb081a1ef29c05ae5e237d5769ecfd70c2e" default))
- '(org-export-backends '(ascii html icalendar latex md odt gemini))
+ '(org-export-backends '(ascii html icalendar latex md odt))
  '(package-selected-packages
-   '(ox-hugo vscode-icon all-the-icons-dired dired-sidebar org-anki anki-editor modus-operandi-theme ox-gemini org-modern yaml-mode nix-mode dbus-codegen rainbow-delimeters company paredit rainbow-delimiters pdf-tools adoc-mode pyvenv lsp-mode org-contrib org-bullets olivetti valign python-black elpher ox-epub mixed-pitch esup treemacs-all-the-icons writeroom-mode writegood-mode poet-theme))
+   '(vscode-icon all-the-icons-dired dired-sidebar org-anki anki-editor modus-operandi-theme org-modern yaml-mode nix-mode dbus-codegen rainbow-delimeters company paredit  adoc-mode pyvenv lsp-mode org-contrib org-bullets olivetti valign python-black elpher ox-epub mixed-pitch esup writeroom-mode writegood-mode poet-theme))
  '(tool-bar-mode nil)
  '(warning-suppress-log-types '((comp)))
  '(warning-suppress-types '((emacs) (emacs) (comp))))
