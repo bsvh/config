@@ -50,10 +50,12 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (setq inhibit-startup-screen t)
 
-;; Remove toolbar, menubar, and scrollbar
-(scroll-bar-mode -1)
+
+;; Remove toolbar, menubar, scrollbar, and window decorations
 (tool-bar-mode -1)
 (menu-bar-mode -1)
+(scroll-bar-mode -1)
+(set-frame-parameter nil 'undecorated t)
 
 ;; Fix titlebar for toolbox containers
 (if (string= system-name "toolbox")
