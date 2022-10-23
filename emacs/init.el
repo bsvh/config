@@ -126,6 +126,7 @@
       '(eglot
        esup 
        expand-region
+       hide-mode-line
        ;markdown-mode
        mixed-pitch
        modus-themes
@@ -147,6 +148,11 @@
 
 (eval-when-compile
   (require 'use-package))
+
+(use-package hide-mode-line
+  :init
+  (add-hook 'markdown-mode-hook #'hide-mode-line-mode)
+  :bind ("<f8>" . hide-mode-line-mode))
 
 (use-package modus-themes
   :ensure
