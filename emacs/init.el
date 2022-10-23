@@ -94,15 +94,15 @@
 ;; Setup fonts
 (set-face-attribute 'default nil :family "Hack FC Ligatured" :height 120)
 (set-face-attribute 'fixed-pitch nil :family "Hack FC Ligatured" :height 1.0)
-(set-face-attribute 'variable-pitch nil :family "Montserrat" :height 1.0)
+(set-face-attribute 'variable-pitch nil :family "Spectral" :height 1.0)
 (set-face-attribute 'mode-line nil :family "Hack" :height 0.8)
 (set-fontset-font t 'symbol (font-spec :family "Noto Color Emoji") nil 'prepend)
 
 ;; Set wrap to 80 chars
 (setq-default fill-column 80)
-;;(setq-default visual-fill-column-center-text t)
+(setq-default visual-fill-column-center-text t)
 (add-hook 'text-mode-hook 'visual-line-mode)
-;;(setq-default visual-fill-column-center-text t)
+(setq-default visual-fill-column-center-text t)
 (add-hook 'visual-line-mode-hook #'visual-fill-column-mode)
 
 ;; Prevent GUI from zombieing out 
@@ -187,6 +187,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package markdown-mode
   :init
+  (setq-default markdown-hide-markup t)
   (add-hook 'markdown-mode-hook
           (lambda ()
             (when buffer-file-name
@@ -331,10 +332,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(header-line ((t (:weight semi-bold :background "inherit"))))
- '(markdown-header-face-1 ((t (:inherit default :foreground "#000000" :family "Spectral SC" :weight normal :height 1.0))))
- '(markdown-header-face-2 ((t (:inherit default :foreground "#000000" :family "Spectral SC" :weight normal :height 1.0))))
- '(markdown-header-face-3 ((t (:inherit default :foreground "#000000" :family "Spectral SC" :weight normal :height 1.0))))
+ '(header-line ((t (:foreground "#7a7a7a" :background "inherit" :box (:line-width 8 :color "white")))))
+ '(markdown-header-face-1 ((t (:inherit default :foreground "#000000" :family "Spectral SC" :weight semi-bold :height 1.4))))
+ '(markdown-header-face-2 ((t (:inherit default :foreground "#000000" :family "Spectral SC" :weight semi-bold :height 1.2))))
+ '(markdown-header-face-3 ((t (:inherit default :foreground "#000000" :family "Spectral SC" :weight semi-bold :height 1.0))))
  '(markdown-header-face-4 ((t (:inherit default :foreground "#000000" :family "Spectral SC" :weight normal :height 1.0))))
  '(markdown-header-face-5 ((t (:inherit default :foreground "#000000" :family "Spectral SC" :weight normal :height 1.0))))
  '(org-document-title ((t (:inherit default :foreground "#B71C1C" :underline "#aaaaaa" :height 1.0))))
