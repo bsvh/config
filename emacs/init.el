@@ -66,6 +66,27 @@
 			     (match-string 1 (buffer-string)))))
       (setq frame-title-format '("" "%b - GNU Emacs @ " toolbox-name ".toolbox"))))
 
+;; Add header bar
+(defun center-header-line (text)
+  (let ((left-padding
+	 (/ (- (window-total-width) (length (format-mode-line text))) 2)))
+    (concat
+     (format
+      (format "%%%ds" left-padding) "")
+     text)))
+(defun short-filename-or-buffer ()
+  (if (buffer-file-name)
+      (abbreviate-file-name buffer-file-name)
+    "%b"))
+(add-hook 'buffer-list-update-hook
+	  (lambda ()
+	    (setq header-line-format
+		  (center-header-line (short-filename-or-buffer)))))
+(add-hook 'window-size-change-functions
+	  (lambda (x)
+	    (setq header-line-format
+		  (center-header-line (short-filename-or-buffer)))))
+
 
 (add-to-list 'default-frame-alist '(height . 50))
 (add-to-list 'default-frame-alist '(width . 90))
@@ -264,7 +285,7 @@
    'org-babel-load-languages
    '((emacs-lisp . t)
      (shell . t)
-     (python . t))))
+     (python . t)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Python                                                                    ;;
@@ -304,6 +325,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(header-line ((t (:weight semi-bold :background "inherit"))))
  '(markdown-header-face-1 ((t (:inherit default :foreground "#000000" :family "Spectral SC" :weight normal :height 1.0))))
  '(markdown-header-face-2 ((t (:inherit default :foreground "#000000" :family "Spectral SC" :weight normal :height 1.0))))
  '(markdown-header-face-3 ((t (:inherit default :foreground "#000000" :family "Spectral SC" :weight normal :height 1.0))))
