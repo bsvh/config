@@ -55,7 +55,7 @@
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
-(set-frame-parameter nil 'undecorated t)
+(set-frame-parameter nil 'undecorated t) ;; CUrrently doesn't  work in daemon mode
 
 ;; Fix titlebar for toolbox containers
 (if (string= system-name "toolbox")
@@ -92,7 +92,7 @@
 (add-to-list 'default-frame-alist '(width . 90))
 
 ;; Setup fonts
-(set-face-attribute 'default nil :family "Hack FC Ligatured" :height 120)
+(set-face-attribute 'default nil :family "Hack FC Ligatured" :height 140)
 (set-face-attribute 'fixed-pitch nil :family "Hack FC Ligatured" :height 1.0)
 (set-face-attribute 'variable-pitch nil :family "Spectral" :height 1.0)
 (set-face-attribute 'mode-line nil :family "Hack" :height 0.8)
@@ -112,6 +112,7 @@
 (delete-selection-mode 1)
 
 (setq-default line-spacing 0.1)
+(setq-default electric-quote-replace-double t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Setup packages                                                            ;;
@@ -193,7 +194,8 @@
             (when buffer-file-name
               (add-hook 'after-save-hook
                         'check-parens
-                        nil t)))))
+                        nil t))))
+  (add-hook 'markdown-mode-hook #'electric-quote-local-mode) )
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -333,11 +335,11 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(header-line ((t (:foreground "#7a7a7a" :background "inherit" :slant italic :box (:line-width 12 :color "white")))))
- '(markdown-header-face-1 ((t (:inherit default :foreground "#000000" :family "Spectral SC" :weight semi-bold :height 1.4))))
- '(markdown-header-face-2 ((t (:inherit default :foreground "#000000" :family "Spectral SC" :weight semi-bold :height 1.2))))
- '(markdown-header-face-3 ((t (:inherit default :foreground "#000000" :family "Spectral SC" :weight semi-bold :height 1.0))))
- '(markdown-header-face-4 ((t (:inherit default :foreground "#000000" :family "Spectral SC" :weight normal :height 1.0))))
- '(markdown-header-face-5 ((t (:inherit default :foreground "#000000" :family "Spectral SC" :weight normal :height 1.0))))
+ '(markdown-header-face-1 ((t (:inherit default :foreground "#000000" :family "Spectral SC" :weight semi-bold :height 1.2))))
+ '(markdown-header-face-2 ((t (:inherit default :foreground "#000000" :family "Spectral SC" :weight semi-bold :height 1.0))))
+ '(markdown-header-face-3 ((t (:inherit default :foreground "#000000" :family "Spectral SC" :weight semi-bold :height 0.8))))
+ '(markdown-header-face-4 ((t (:inherit default :foreground "#000000" :family "Spectral SC" :weight normal :height 0.8))))
+ '(markdown-header-face-5 ((t (:inherit default :foreground "#000000" :family "Spectral SC" :weight normal :height 0.8))))
  '(org-document-title ((t (:inherit default :foreground "#B71C1C" :underline "#aaaaaa" :height 1.0))))
  '(org-hide ((t (:inherit fixed-pitch :foreground "#e1d9c2"))))
  '(org-level-1 ((t (:inherit default :foreground "#770b0b" :family "Montserrat" :weight medium :height 1.6))))
