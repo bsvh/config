@@ -47,6 +47,7 @@ in
     rustup
     rust-analyzer
     tex
+    zola
   ];
 
   home.file."gpg.conf" = {
