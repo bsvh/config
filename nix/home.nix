@@ -23,6 +23,12 @@ in
     CARGO_HOME = "$HOME/.local/sdk/rust/cargo";
     QT_QPA_PLATFORM = "wayland;xcb";
     NIXOS_OZONE_WL = "1";
+    EDITOR = "hx";
+  };
+  home.shellAliases = {
+    vi = "hx";
+    vim = "hx";
+    nvim = "hx";
   };
   home.packages = with pkgs; [
     anki
@@ -30,6 +36,8 @@ in
     cachix
     emacsPgtkNativeComp
     fd
+    fff
+    fzf
     gcc
     hack-font
     htop
@@ -90,7 +98,7 @@ in
     enable = true;
     functions = {
       mkcd = "mkdir -p $argv[1] && cd $argv[1]";
-    }; 
+    };     
   };
   programs.git = {
     enable = true;
@@ -111,28 +119,6 @@ in
       include =  "./theme.conf";
       confirm_os_window_close = "0";
     };
-  };
-  programs.neovim = {
-    enable = true;
-    withPython3 = true;
-    viAlias = true;
-    vimAlias = true;
-    plugins = with pkgs.vimPlugins; [
-      vim-nix
-      vim-tmux-navigator
-    ];
-    extraConfig = ''
-      silent !mkdir -p ~/.local/share/nvim/undo
-      silent !mkdir -p ~/.local/share/nvim/backup
-      silent !mkdir -p ~/.cache/nvim/backup
-      set relativenumber
-      set number
-      set undofile
-      set backup
-      set undodir=~/.local/share/nvim/undo//
-      set backupdir=~/.local/share/nvim/backup//
-      set directory=~/.cache/nvim/swap//
-    '';
   };
   programs.starship = {
     enable = true;
