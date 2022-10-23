@@ -332,7 +332,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(header-line ((t (:foreground "#7a7a7a" :background "inherit" :box (:line-width 8 :color "white")))))
+ '(header-line ((t (:foreground "#7a7a7a" :background "inherit" :slant italic :box (:line-width 12 :color "white")))))
  '(markdown-header-face-1 ((t (:inherit default :foreground "#000000" :family "Spectral SC" :weight semi-bold :height 1.4))))
  '(markdown-header-face-2 ((t (:inherit default :foreground "#000000" :family "Spectral SC" :weight semi-bold :height 1.2))))
  '(markdown-header-face-3 ((t (:inherit default :foreground "#000000" :family "Spectral SC" :weight semi-bold :height 1.0))))
