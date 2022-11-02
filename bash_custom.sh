@@ -15,6 +15,12 @@ fi
 export GPG_TTY=$(tty)
 gpg-connect-agent updatestartuptty /bye >/dev/null
 
+CARGO_HOME="$HOME/.local/sdk/rust/cargo"
+if [[ -d "${CARGO_HOME}/bin" ]]; then
+	echo "$PATH" | grep -q "${CARGO_HOME}/bin"
+	[ $? -eq 1 ] && export PATH="${CARGO_HOME}/bin:${PATH}"
+fi
+
 # Execute fish for interactive shells
 if [[ $(ps --no-header --pid=$PPID --format=comm) != "fish" && $(which fish 2>/dev/null) && -z ${BASH_EXECUTION_STRING} ]]; then
 	exec fish
