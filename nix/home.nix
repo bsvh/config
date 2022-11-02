@@ -37,15 +37,19 @@ in
     emacsPgtkNativeComp
     fd
     fff
+    ffmpeg
     fzf
     gcc
     hack-font
     htop
+    httm
+    mediainfo
     nixgl.nixGLIntel
     pandoc
     ripgrep
     rustup
     rust-analyzer
+    sass
     tex
     zola
   ];
