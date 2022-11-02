@@ -92,7 +92,7 @@
 (add-to-list 'default-frame-alist '(width . 90))
 
 ;; Setup fonts
-(set-face-attribute 'default nil :family "Hack FC Ligatured" :height 140)
+(set-face-attribute 'default nil :family "Hack FC Ligatured" :height 130)
 (set-face-attribute 'fixed-pitch nil :family "Hack FC Ligatured" :height 1.0)
 (set-face-attribute 'variable-pitch nil :family "Spectral" :height 1.0)
 (set-face-attribute 'mode-line nil :family "Hack" :height 0.8)
@@ -325,7 +325,7 @@
    '("046e442b73846ae114d575a51be9edb081a1ef29c05ae5e237d5769ecfd70c2e" default))
  '(org-export-backends '(ascii html icalendar latex md odt))
  '(package-selected-packages
-   '(vscode-icon all-the-icons-dired dired-sidebar org-anki anki-editor modus-operandi-theme org-modern yaml-mode nix-mode dbus-codegen rainbow-delimeters company paredit  adoc-mode pyvenv lsp-mode org-contrib org-bullets olivetti valign python-black elpher ox-epub mixed-pitch esup writeroom-mode writegood-mode poet-theme))
+   '(vscode-icon all-the-icons-dired dired-sidebar org-anki anki-editor modus-operandi-theme org-modern yaml-mode nix-mode dbus-codegen rainbow-delimeters company paredit adoc-mode pyvenv lsp-mode org-contrib org-bullets olivetti valign python-black elpher ox-epub mixed-pitch esup writeroom-mode writegood-mode poet-theme))
  '(tool-bar-mode nil)
  '(warning-suppress-log-types '((comp)))
  '(warning-suppress-types '((emacs) (emacs) (comp))))
@@ -335,9 +335,9 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(header-line ((t (:foreground "#7a7a7a" :background "inherit" :slant italic :box (:line-width 12 :color "white")))))
- '(markdown-header-face-1 ((t (:inherit default :foreground "#000000" :family "Spectral SC" :weight semi-bold :height 1.2))))
- '(markdown-header-face-2 ((t (:inherit default :foreground "#000000" :family "Spectral SC" :weight semi-bold :height 1.0))))
- '(markdown-header-face-3 ((t (:inherit default :foreground "#000000" :family "Spectral SC" :weight semi-bold :height 0.8))))
+ '(markdown-header-face-1 ((t (:inherit default :foreground "#000000" :family "Albert Sans Light" :weight light :height 1.8))))
+ '(markdown-header-face-2 ((t (:inherit default :foreground "#000000" :family "Albert Sans Light" :weight light :height 1.4))))
+ '(markdown-header-face-3 ((t (:inherit default :foreground "#000000" :family "Spectral SC Extralight" :weight extra-light :height 1.0))))
  '(markdown-header-face-4 ((t (:inherit default :foreground "#000000" :family "Spectral SC" :weight normal :height 0.8))))
  '(markdown-header-face-5 ((t (:inherit default :foreground "#000000" :family "Spectral SC" :weight normal :height 0.8))))
  '(org-document-title ((t (:inherit default :foreground "#B71C1C" :underline "#aaaaaa" :height 1.0))))
