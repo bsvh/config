@@ -166,6 +166,14 @@
   (modus-themes-load-themes)
   :config
   (modus-themes-load-operandi)
+  ;; Change color of header-line box (used for padding) to background color
+  (defun my-update-header-box ()
+    (interactive)
+    (modus-themes-load-themes)
+    (if (eq (modus-themes--current-theme) 'modus-operandi)
+	(face-remap-add-relative 'header-line nil '(:box (:line-width 12 :color "white")))
+      (face-remap-add-relative 'header-line nil '(:box (:line-width 12 :color "black")))))
+  (advice-add 'modus-themes-toggle :after #'my-update-header-box)
   :bind ("<f5>" . modus-themes-toggle))
 
 
