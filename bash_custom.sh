@@ -15,7 +15,8 @@ fi
 export GPG_TTY=$(tty)
 gpg-connect-agent updatestartuptty /bye >/dev/null
 
-CARGO_HOME="$HOME/.local/sdk/rust/cargo"
+export CARGO_HOME="$HOME/.local/sdk/rust/cargo"
+export RUSTUP_HOME="$HOME/.local/sdk/rust/cargo"
 if [[ -d "${CARGO_HOME}/bin" ]]; then
 	echo "$PATH" | grep -q "${CARGO_HOME}/bin"
 	[ $? -eq 1 ] && export PATH="${CARGO_HOME}/bin:${PATH}"
