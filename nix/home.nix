@@ -173,21 +173,21 @@ in
       kamikillerto.vscode-colorize
       matklad.rust-analyzer
       redhat.vscode-yaml
-      ritwickdev.liveserver
+      ritwickdey.liveserver
       vscodevim.vim
     ];
    userSettings = {
-     "editor.bracketPairColorization.enabled": true,
+     "editor.bracketPairColorization.enabled" = true;
      "editor.fontFamily" = "'Hack NF FC Ligatured', 'Hack', 'Droid Sans Mono', 'monospace', monospace";
      "editor.fontLigatures" = true;
      "editor.formatOnSave" = true;
      "editor.formatOnPaste" = true;
-     "editor.guides.bracketPairs":"active"
+     "editor.guides.bracketPairs" = "active";
      "editor.inlayHints.enabled" = true;
      "editor.inlayHints.fontSize" = 10;
      "rust-analyzer.checkOnSave.command" = "clippy";
      "telemetry.telemetryLevel" = "off";
-     "window.menuBarVisibility": "toggle";
+     "window.menuBarVisibility" = "toggle";
      "workbench.colorTheme" = "Default Dark+";
      "[rust]" = {
        "editor.defaultFormatter" = "rust-lang.rust-analyzer";
