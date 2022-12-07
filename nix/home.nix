@@ -96,7 +96,7 @@ in
 
   programs.helix.enable = true;
   programs.helix.settings = {
-    theme = "autumn";
+    theme = "monokai";
   };
   programs.helix.languages = [
     {
@@ -126,10 +126,9 @@ in
       bold_italic_font = "auto";
       hide_window_decorations = true;
       window_padding_width = "6";
-      theme = "Monokai";
-      include =  "./theme.conf";
       confirm_os_window_close = "0";
     };
+    theme = "Monokai";
   };
   programs.starship = {
     enable = true;
