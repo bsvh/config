@@ -162,16 +162,30 @@ in
     enable = true;
     package = pkgs.vscodium;
     extensions = with pkgs.vscode-extensions; [
+      formulahendry.auto-rename-tag
+      formulahendry.auto-close-tag
+      kamikillerto.vscode-colorize
       matklad.rust-analyzer
       redhat.vscode-yaml
+      ritwickdev.liveserver
       vscodevim.vim
     ];
    userSettings = {
-     "editor.fontLigatures" = true;
+     "editor.bracketPairColorization.enabled": true,
      "editor.fontFamily" = "'Hack NF FC Ligatured', 'Hack', 'Droid Sans Mono', 'monospace', monospace";
-     "editor.inlayHints.enabled" = true;
+     "editor.fontLigatures" = true;
      "editor.formatOnSave" = true;
      "editor.formatOnPaste" = true;
+     "editor.guides.bracketPairs":"active"
+     "editor.inlayHints.enabled" = true;
+     "editor.inlayHints.fontSize" = 10;
+     "rust-analyzer.checkOnSave.command" = "clippy";
+     "telemetry.telemetryLevel" = "off";
+     "window.menuBarVisibility": "toggle";
+     "workbench.colorTheme" = "Default Dark+";
+     "[rust]" = {
+       "editor.defaultFormatter" = "rust-lang.rust-analyzer";
+     };
      "workbench.colorCustomizations" = {
        "[Default Dark+]" = {
          "editorInlayHint.background" = "#1e1e1e";
