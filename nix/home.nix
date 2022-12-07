@@ -98,6 +98,12 @@ in
   programs.helix.settings = {
     theme = "autumn";
   };
+  programs.helix.languages = [
+    {
+      name = "rust";
+      config.checkOnSave = { command = "clippy"; };
+    }
+  ];
   programs.home-manager.enable = true;
   programs.fish = {
     enable = true;
