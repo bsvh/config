@@ -118,37 +118,11 @@
 ;; Setup packages                                                            ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (require 'package)
-(add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/") t)
+
+;; Force use of emacsPackages from nix
+(setq package-archives nil)
+(setq package-enable-at-startup nil)
 (package-initialize)
-
-;; Keep a list of packages and install them if needed
-(setq package-list
-      '(eglot
-       esup 
-       expand-region
-       hide-mode-line
-       ;markdown-mode
-       mixed-pitch
-       modus-themes
-       move-text
-       org-bullets
-       org-modern
-       poet-theme
-       python-black
-       pyvenv
-       rustic
-       use-package
-       writegood-mode
-       writeroom-mode))
-(unless package-archive-contents
-  (package-refresh-contents))
-(dolist (package package-list)
-  (unless (package-installed-p package)
-    (package-install package)))
-
-(eval-when-compile
-  (require 'use-package))
 
 (use-package hide-mode-line
   :init
@@ -156,7 +130,6 @@
   :bind ("<f8>" . hide-mode-line-mode))
 
 (use-package modus-themes
-  :ensure
   :init
   (setq modus-themes-italic-constructs t
 	modus-themes-bold-constructs t
@@ -190,6 +163,9 @@
   :config
   (move-text-default-bindings))
 
+(use-package writegood-mode)
+(use-package writegood-mode)
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Markdown Mode                                                             ;;
@@ -218,6 +194,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Org Mode                                                                  ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package org-bullets)
+(use-package org-modern)
 (use-package org
   :mode (("\\.org$" . org-mode))
   :config
@@ -316,32 +294,21 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Rust                                                                      ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(use-package rustic
-  :config
-  (setq rustic-lsp-client 'eglot))
-
+(use-package rustic)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Custom Variables                                                          ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Specify location for Customize so it doesn't try to write to R/O init.el
+(setq custom-file "~/.config/emacs/emacs-custom.el")
+
 (custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   '("046e442b73846ae114d575a51be9edb081a1ef29c05ae5e237d5769ecfd70c2e" default))
  '(org-export-backends '(ascii html icalendar latex md odt))
- '(package-selected-packages
-   '(vscode-icon all-the-icons-dired dired-sidebar org-anki anki-editor modus-operandi-theme org-modern yaml-mode nix-mode dbus-codegen rainbow-delimeters company paredit adoc-mode pyvenv lsp-mode org-contrib org-bullets olivetti valign python-black elpher ox-epub mixed-pitch esup writeroom-mode writegood-mode poet-theme))
  '(tool-bar-mode nil)
  '(warning-suppress-log-types '((comp)))
  '(warning-suppress-types '((emacs) (emacs) (comp))))
 (custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
  '(header-line ((t (:foreground "#7a7a7a" :background "inherit" :slant italic :box (:line-width 12 :color "white")))))
  '(markdown-header-face-1 ((t (:inherit default :foreground "#000000" :family "Albert Sans Light" :weight light :height 1.8))))
  '(markdown-header-face-2 ((t (:inherit default :foreground "#000000" :family "Albert Sans Light" :weight light :height 1.4))))
@@ -365,3 +332,6 @@
     (add-text-properties (line-beginning-position) (line-beginning-position 2)
              `(line-prefix ,line)))
   (forward-line))
+
+(when (file-exists-p custom-file)
+  (load custom-file))

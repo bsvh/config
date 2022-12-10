@@ -34,7 +34,6 @@ in
     anki
     bacon
     cachix
-    emacsPgtkNativeComp
     fd
     fff
     ffmpeg
@@ -95,6 +94,27 @@ in
     target = ".config/emacs/early-init.el";
   };
 
+  programs.emacs.enable = true;
+  programs.emacs.package = pkgs.emacsPgtkNativeComp;
+  programs.emacs.extraPackages = epkgs: [ 
+    epkgs.esup
+    epkgs.expand-region
+    epkgs.hide-mode-line
+    epkgs.markdown-mode
+    epkgs.mixed-pitch
+    epkgs.modus-themes
+    epkgs.move-text
+    epkgs.nix-mode
+    epkgs.org-bullets
+    epkgs.org-modern
+    epkgs.python-black
+    epkgs.pyvenv
+    epkgs.rustic
+    epkgs.use-package
+    epkgs.writegood-mode
+    epkgs.writeroom-mode
+    epkgs.yuck-mode
+   ];
   programs.helix.enable = true;
   programs.helix.package = inputs.helix.packages."x86_64-linux".default;
   programs.helix.settings = {
