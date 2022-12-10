@@ -44,6 +44,7 @@ in
     htop
     httm
     mediainfo
+    mitscheme
     nixgl.nixGLIntel
     pandoc
     ripgrep
@@ -109,6 +110,7 @@ in
     enable = true;
     functions = {
       mkcd = "mkdir -p $argv[1] && cd $argv[1]";
+      edwin = "mit-scheme --eval \"(edwin 'console)\"";
     };     
   };
   programs.git = {
