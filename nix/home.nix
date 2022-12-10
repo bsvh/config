@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, inputs, ... }:
 
 let
   user = "bsvh";
@@ -96,8 +96,10 @@ in
   };
 
   programs.helix.enable = true;
+  programs.helix.package = inputs.helix.packages."x86_64-linux".default;
   programs.helix.settings = {
     theme = "monokai";
+    editor.bufferline = "multiple";
   };
   programs.helix.languages = [
     {

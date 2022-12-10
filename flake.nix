@@ -14,6 +14,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixgl.url = "github:guibou/nixGL";
+    helix.url = "github:helix-editor/helix";
   };
 
   outputs = { self, nixpkgs, home-manager, emacs-overlay, nixgl, ... }@inputs:
@@ -30,6 +31,7 @@
     in {
       homeConfigurations.bsvh = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
+        extraSpecialArgs = { inherit inputs; };
 
         modules = [
           ./nix/home.nix
