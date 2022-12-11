@@ -106,6 +106,23 @@ in
       fi
     '';
   };
+  home.file."emacs-protocol.desktop" = {
+    target = ".local/share/applications/org-protocol.desktop";
+    text = ''
+      [Desktop Entry]
+      Name=org-protocol
+      Exec=/home/bsvh/.local/bin/emacsclient-open %u
+      Type=Application
+      Terminal=false
+      Categories=System;
+      MimeType=x-scheme-handler/org-protocol;
+    '';
+    onChange = ''
+      which update-desktop-database 2>/dev/null && update-desktop-database ~/.local/share/applications/
+      which kbuildsyscoca5 2>/dev/null && kbuildsyscoca5
+      xdg-mime default org-protocol.desktop x-scheme-handler/org-protocol
+    '';
+  };
 
   programs.emacs.enable = true;
   programs.emacs.package = pkgs.emacsPgtkNativeComp;
