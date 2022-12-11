@@ -168,7 +168,10 @@ in
     functions = {
       mkcd = "mkdir -p $argv[1] && cd $argv[1]";
       edwin = "mit-scheme --eval \"(edwin 'console)\"";
-    };     
+    };
+    shellAliases = {
+      cat = "imgcat";
+    };
   };
   programs.git = {
     enable = true;
