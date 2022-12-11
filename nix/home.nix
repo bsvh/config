@@ -123,6 +123,11 @@ in
       xdg-mime default org-protocol.desktop x-scheme-handler/org-protocol
     '';
   };
+  home.file."imgcat.sh" = {
+    source = ../scripts/imgcat.sh;
+    target = ".local/bin/imgcat";
+    executable = true;
+  };
 
   programs.emacs.enable = true;
   programs.emacs.package = pkgs.emacsPgtkNativeComp;
