@@ -242,6 +242,11 @@ in
   programs.wezterm.enable = true;
   programs.wezterm.extraConfig = ''
     return {
+      set_environment_variables = {
+        TERMINFO_DIRS = '${config.home.profileDirectory}/share/terminfo',
+        WSLENV = 'TERMINFO_DIRS',
+      },
+      term = 'wezterm',
       enable_wayland = true,
       color_scheme = "Molokai",
       font = wezterm.font {
