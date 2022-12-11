@@ -170,21 +170,6 @@ in
     userName = "Brendan Van Hook";
     userEmail = "brendan@vastactive.com";
   };
-  programs.kitty = {
-    enable = true;
-    settings = {
-      font_size = "12.0";
-      font_family = "Hack Nerd Font FC Ligatured";
-      bold_font = "auto";
-      italic_font = "auto";
-      bold_italic_font = "auto";
-      hide_window_decorations = true;
-      window_padding_width = "6";
-      confirm_os_window_close = "0";
-      background = "#222222";
-    };
-    theme = "Monokai Pro (filter Spectrum)";
-  };
   programs.starship = {
     enable = true;
     enableFishIntegration = true;
@@ -254,6 +239,23 @@ in
      };
    };
   };
+  programs.wezterm.enable = true;
+  programs.wezterm.extraConfig = ''
+    return {
+      enable_wayland = true,
+      color_scheme = "Molokai",
+      font = wezterm.font {
+        family = 'Hack Nerd Font FC Ligatured',
+        harfbuzz_features = { "zero", "ss01", "cv05", "calt=1", "clig=1", "liga=1" },
+      },
+      font_size = 11,
+      use_fancy_tab_bar = false,
+      hide_tab_bar_if_only_one_tab = true,
+      colors = {
+        background = "#222222",
+      },
+    }
+'';
 
   home.stateVersion = "22.11";
 }
