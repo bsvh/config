@@ -118,7 +118,7 @@ in
   programs.helix.enable = true;
   programs.helix.package = inputs.helix.packages."x86_64-linux".default;
   programs.helix.settings = {
-    theme = "monokai";
+    theme = "monokai_pro_spectrum";
     editor.bufferline = "multiple";
   };
   programs.helix.languages = [
@@ -151,8 +151,9 @@ in
       hide_window_decorations = true;
       window_padding_width = "6";
       confirm_os_window_close = "0";
+      background = "#222222";
     };
-    theme = "Monokai";
+    theme = "Monokai Pro (filter Spectrum)";
   };
   programs.starship = {
     enable = true;
