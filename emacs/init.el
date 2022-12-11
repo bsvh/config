@@ -78,14 +78,17 @@
   (if (buffer-file-name)
       (abbreviate-file-name buffer-file-name)
     "%b"))
+(defun set-header-if-needed ()
+  (if (or (string= major-mode "fundamental")
+	  (boundp 'org-capture-mode)
+	  (boundp 'org-src-mode))
+      nil
+      (setq header-line-format
+     	    (center-header-line (short-filename-or-buffer)))))
 (add-hook 'buffer-list-update-hook
-	  (lambda ()
-	    (setq header-line-format
-		  (center-header-line (short-filename-or-buffer)))))
+	  'set-header-if-needed)
 (add-hook 'window-size-change-functions
-	  (lambda (x)
-	    (setq header-line-format
-		  (center-header-line (short-filename-or-buffer)))))
+	  'set-header-if-needed)
 
 
 (add-to-list 'default-frame-alist '(height . 50))
