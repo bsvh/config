@@ -3,6 +3,7 @@
   imports = [
     ./hardware/testbox.nix
     ./common.nix
+    ./desktops/hyprland.nix
   ];
 
   nixpkgs = {
