@@ -12,5 +12,9 @@
     vim
     wget
   ];
+
+  services.udev.packages = [ pkgs.yubikey-personalization ];
+  services.pcscd.enable = true;
+
   nix.settings.trusted-users = [ "root" "bsvh" ];
 }
