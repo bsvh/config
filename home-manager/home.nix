@@ -62,6 +62,7 @@ in
     rust-analyzer
     sass
     tex
+    timg
     zola
   ];
 

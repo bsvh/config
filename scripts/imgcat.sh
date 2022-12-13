@@ -10,9 +10,19 @@ isimage() {
   [[ " ${imagetypes[*]} " =~ " ${filetype} " ]]
  }
 
+if which timg >/dev/null 2>&1; then
+  imgcat=timg
+elif [ "${TERM}" == "wezterm" ]; then
+  imgcat="wezterm imgcat"
+elif [ "${TERM}" == "xterm-kitty" ]; then
+  imgcat="kitty +kitten icat"
+else
+  echo "No available terminal image viewer"
+fi
 
-if [ "$TERM" == "wezterm" ] && [ "$#" -eq 1 ] &&  isimage "${1}"; then
-  wezterm imgcat "${1}"
+
+if [ "$#" -eq 1 ] &&  isimage "${1}"; then
+  $imgcat "${1}"
 else
   cat "${@}"
 fi
