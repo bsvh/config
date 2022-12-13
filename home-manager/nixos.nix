@@ -34,7 +34,7 @@
       no-comments = true;
       no-emit-version = true;
       no-greeting = true;
-      key-id-format ="0xlong";
+      keyid-format ="0xlong";
       list-options = "show-uid-validity";
       verify-options = "show-uid-validity";
       with-fingerprint = true;
