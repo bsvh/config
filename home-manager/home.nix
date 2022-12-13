@@ -258,6 +258,22 @@ in
      };
    };
   };
+  programs.kitty = {
+    enable = true;
+    settings = {
+      font_size = "12.0";
+      font_family = "Iosevka Term";
+      font_features = "Iosevka-Term +calt +ss09";
+      bold_font = "auto";
+      italic_font = "auto";
+      bold_italic_font = "auto";
+      hide_window_decorations = true;
+      window_padding_width = "6";
+      confirm_os_window_close = "0";
+      background = "#222222";
+    };
+    theme = "Molokai";
+  };
   programs.wezterm.enable = true;
   programs.wezterm.extraConfig = ''
     return {
