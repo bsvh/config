@@ -83,6 +83,8 @@ in
     text = ''
       pinentry-program /usr/bin/pinentry-gnome3
       enable-ssh-support
+      default-cache-ttl 60
+      max-cache-ttl 120
     '';
   };
   home.file."scdaemon.conf" = {
