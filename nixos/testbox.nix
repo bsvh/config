@@ -46,10 +46,10 @@
     ];
     files = [
       "/etc/machine-id"
-      { file = "/etc/ssh/ssh_host_ed25519_key"; mode = "u=rw,g=,o="; }
-      { file = "/etc/ssh/ssh_host_rsa_key"; mode = "u=rw,g=,o="; }
-      { file = "/etc/ssh/ssh_host_ed25519_key.pub"; mode = "u=rw,g=r,o=r"; }
-      { file = "/etc/ssh/ssh_host_rsa_key.pub"; mode = "u=rw,g=r,o=r"; }
+      "/etc/ssh/ssh_host_ed25519_key"
+      "/etc/ssh/ssh_host_rsa_key"
+      "/etc/ssh/ssh_host_ed25519_key.pub"
+      "/etc/ssh/ssh_host_rsa_key.pub"
     ];
   };
 
