@@ -27,7 +27,7 @@
     nixgl.url = "github:guibou/nixGL";
     helix.url = "github:helix-editor/helix";
     hyprland.url = "github:hyprwm/Hyprland";
-    impermanence = "github:nix-community/impermanence";
+    impermanence.url = "github:nix-community/impermanence";
   };
 
   outputs = { self, nixpkgs, home-manager, hyprland, impermanence, ... }@inputs:
