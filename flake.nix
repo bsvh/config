@@ -43,7 +43,7 @@
         in import ./pkgs { inherit pkgs; }
       );
       nixosConfigurations = {
-        nixos-vm = nixpkgs.lib.nixosSystem {
+        testbox = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
           modules = [
             ./nixos/testbox.nix
