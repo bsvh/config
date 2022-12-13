@@ -81,7 +81,7 @@ in
   home.file."gpg-agent.conf" = {
     target = ".gnupg/gpg-agent.conf";
     text = ''
-      pinentry-program /usr/bin/pinentry-qt
+      pinentry-program /usr/bin/pinentry-gnome3
       enable-ssh-support
     '';
   };
