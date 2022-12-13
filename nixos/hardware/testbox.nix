@@ -35,6 +35,7 @@
     { device = "/dev/mapper/luksdev";
       fsType = "btrfs";
       options = [ "subvol=@persist" "compress=zstd" "noatime" ];
+      neededForBoot = true;
     };
 
   fileSystems."/nix" =
