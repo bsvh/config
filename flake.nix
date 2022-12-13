@@ -17,26 +17,32 @@
     helix.url = "github:helix-editor/helix";
   };
 
-  outputs = { self, nixpkgs, home-manager, emacs-overlay, nixgl, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, ... }@inputs:
     let
-      system = "x86_64-linux";
-      pkgs = import nixpkgs {
-        inherit system;
-        config.allowUnfree = true;
-        overlays = [ 
-          inputs.emacs-overlay.overlay
-          nixgl.overlay
-        ];
-      };
-    in {
-      homeConfigurations.bsvh = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        extraSpecialArgs = { inherit inputs; };
+      inherit (self) outputs;
+      forAllSystems = nixpkgs.lib.genAttrs [
+        "aarch64-linux"
+        "i686-linux"
+        "x86_64-linux"
+        "aarch64-darwin"
+        "x86_64-darwin"
+      ];
+    in 
+    rec {
+      packages = forAllSystems (system:
+        let pkgs = nixpkgs.legacyPackages.${system};
+        in import ./pkgs { inherit pkgs; }
+      );
+      homeConfigurations = {
+        standalone = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          extraSpecialArgs = { inherit inputs outputs; };
 
-        modules = [
-          ./nix/home.nix
-        ];
+          modules = [
+            ./home-manager/standalone.nix
+          ];
 
+        };
       };
     };
 }

@@ -15,6 +15,16 @@ let
 in
 {
 
+  nixpkgs = {
+    overlays = [
+      inputs.emacs-overlay.overlay
+    ];
+    config = {
+      allowUnfree = true;
+      allowUnfreePredicate = (_: true);
+    };
+  };
+
   fonts.fontconfig.enable = true;
   home.username = "${user}";
   home.homeDirectory = "/home/${user}";
@@ -46,7 +56,6 @@ in
     just
     mediainfo
     mitscheme
-    nixgl.nixGLIntel
     pandoc
     ripgrep
     rustup
@@ -84,15 +93,15 @@ in
     '';
   };
   home.file."custom.sh" = {
-    source = ../bash_custom.sh;
+    source = ../dotfiles/bash/bash_custom.sh;
     target = ".bashrc.d/custom.sh";
   };
   home.file."init.el" = {
-    source = ../emacs/init.el;
+    source = ../dotfiles/emacs/init.el;
     target = ".config/emacs/init.el";
   };
   home.file."early-init.el" = {
-    source = ../emacs/early-init.el;
+    source = ../dotfiles/emacs/early-init.el;
     target = ".config/emacs/early-init.el";
   };
   home.file."emacsclient-open.sh" = {
@@ -122,7 +131,7 @@ in
     onChange = ''
       which update-desktop-database 2>/dev/null && update-desktop-database ~/.local/share/applications/
       which kbuildsyscoca5 2>/dev/null && kbuildsyscoca5
-      xdg-mime default org-protocol.desktop x-scheme-handler/org-protocol
+      which xdg-mime 2>/dev/null && xdg-mime default org-protocol.desktop x-scheme-handler/org-protocol
     '';
   };
   home.file."imgcat.sh" = {
@@ -273,5 +282,6 @@ in
     }
 '';
 
+  systemd.user.startServices = "sd-switch";
   home.stateVersion = "22.11";
 }
