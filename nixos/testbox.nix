@@ -1,6 +1,7 @@
 { inputs, outputs, lib, config, pkgs, ... }: {
 
   imports = [
+    inputs.impermanence.nixosModules.impermanence
     ./hardware/testbox.nix
     ./common.nix
     ./desktops/hyprland.nix
@@ -35,6 +36,19 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  environment.persistence."/persist/system" = {
+    hideMounts = true;
+    directories = [
+      "/etc/NetworkManager/system-connections"
+      "/var/lib/bluetooth"
+      "/var/lib/systemd/coredump"
+    ];
+    files = [
+      "/etc/machine-id"
+    ];
+  };
+
+  users.mutableUsers = false;
   users.users = {
     bsvh = {
       initialPassword = "changeme";

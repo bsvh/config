@@ -19,10 +19,15 @@
       fsType = "vfat";
     };
 
-  fileSystems."/" =
-    { device = "/dev/mapper/luksdev";
-      fsType = "btrfs";
-      options = [ "subvol=@nixos" "compress=zstd" "noatime" ];
+  # fileSystems."/" =
+  #   { device = "/dev/mapper/luksdev";
+  #     fsType = "btrfs";
+  #     options = [ "subvol=@nixos" "compress=zstd" "noatime" ];
+  #   };
+  fileSystems."/" = 
+    { device = "none";
+      fsType = "tmpfs";
+      options = [ "defaults" "size=2G" "mode=755" ];
     };
 
 
