@@ -15,7 +15,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     emacs-overlay = {
-      url = "github:nix-community/emacs-overlay/4cec379c853658bc1eab0344b1e525e1ab3acc73";
+      url = "github:nix-community/emacs-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
