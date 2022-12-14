@@ -1,4 +1,7 @@
 { inputs, outputs, lib, config, pkgs, ... }:
+let
+  obsp = pkgs.obs-studio-plugins
+in
 {
   imports = [
     ./home.nix
@@ -14,6 +17,32 @@
   };
 
   home.packages = with pkgs; [
+    anki
+    arduino
+    audacity
+    celluloid
+    easyeffects
+    ffmpeg-full
+    firefox
+    foliate
+    freetube
+    gimp-with-plugins
+    inkscape-with-extensions
+    keepassxc
+    mpv
+    nicotine-plus
+    obs-studio
+    obsp.wlrobs
+    obsp.obs-gstreamer
+    obsp.input-overlay
+    obsp.obs-pipewire-audio-capture
+    pavucontrol
+    picard
+    qbittorrent
+    super-slicer
+    thunderbird
+    vorta
+    yt-dlp
   ];
 
   programs.gpg = {
