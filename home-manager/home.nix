@@ -144,7 +144,7 @@ in
   };
 
   programs.emacs.enable = true;
-  programs.emacs.package = pkgs.emacsPgtkNativeComp;
+  programs.emacs.package = pkgs.emacsPgtk;
   programs.emacs.extraPackages = epkgs: [ 
     epkgs.esup
     epkgs.expand-region
