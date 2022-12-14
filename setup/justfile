@@ -1,0 +1,63 @@
+set dotenv-load
+
+drive := if env_var("DRIVE") =~ '.*nvme0n[0-9]+' { "${DRIVE}p" } else { "${DRIVE}" }
+efi := drive + '${EFI_PART}'
+root := drive + '${ROOT_PART}'
+luks := "/dev/mapper/luksdev"
+  
+echo:
+	@echo "Configuration Variables"
+	@echo "-----------------------"
+	@echo "  DRIVE=$DRIVE"
+	@echo "  EFI_PART=$EFI_PART"
+	@echo "  ROOT_PART=$ROOT_PART"
+	@echo "  ENCRYPT=$ENCRYPT"
+	@echo ""
+	@echo "Using drive $DRIVE"
+	@echo "EFI partition set to {{efi}}"
+	@echo "Root partition set to {{root}}"
+
+begin:
+	@echo Beginning preparation
+
+disklabel:
+	parted $DISK mklabel gpt
+
+partitions:
+	@echo Creating partitions
+	sgdisk -n ${EFI_PART}:0:+1G -t ${EFI_PART}:ef00 -c ${EFI_PART}:EFI $DISK
+	sgdisk -n ${ROOT_PART}:0:0 -t ${ROOT_PART}:8308 -c ${EFI_PART}:ENCRYPTEDSYSTEM $DISK
+	@echo Formatting partitions
+	mkfs.fat -F 32 {{efi}}
+
+encrypt:
+	@echo Encrypting drive
+	cryptsetup --perf-no_read_workqueue --perf-no_write_workqueue luksFormat {{root}}
+	cryptsetup open {{root}} luksdev
+	mkfs.btrfs {{luks}}
+
+subvolumes:
+	mount {{luks}} /mnt
+	for sv in nixos-logs nix persist files swap flatpak libvirt; do \
+		btrfs subvolume create /mnt/@${sv}; \
+	done
+	umount /mnt
+
+mount:
+	mount -t tmpfs tmpfs /mnt
+	for folder in boot nix persist files swap var/log var/lib/flatpak var/lib/libvirt; do \
+		mkdir -p /mnt/$folder; \
+	done
+	mount {{efi}} /mnt/boot
+	mount {{luks}} -o compress=zstd,noatime,subvol=@nix /mnt/nix 
+	mount {{luks}} -o compress=zstd,noatime,subvol=@persist /mnt/persist
+	mount {{luks}} -o compress=zstd,noatime,subvol=@files /mnt/files 
+	mount {{luks}} -o compress=zstd,noatime,subvol=@swap /mnt/swap 
+	mount {{luks}} -o compress=zstd,noatime,subvol=@nixos-logs /mnt/var/log
+	mount {{luks}} -o compress=zstd,noatime,subvol=@libvirt /mnt/var/lib/libvirt
+	mount {{luks}} -o compress=zstd,noatime,subvol=@flatpak /mnt/var/lib/flatpak
+prepare: disklabel partitions encrypt subvolumes mount
+	@echo done
+nixinstall:
+	nixos-install --root /mnt --flake .#ubik
+
