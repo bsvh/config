@@ -55,6 +55,7 @@ in
     iosevka-bin
     just
     mediainfo
+    meld
     mitscheme
     pandoc
     ripgrep
@@ -191,6 +192,15 @@ in
     enable = true;
     userName = "Brendan Van Hook";
     userEmail = "brendan@vastactive.com";
+    diff-so-fancy.enable = true;
+    extraConfig = {
+      merge.tool = "meld";
+      mergetool.meld = {
+        cmd = ''
+          meld "$LOCAL" "$BASE" "$REMOTE" --output "$MERGED"
+        '';
+      };
+    };
   };
   programs.starship = {
     enable = true;
