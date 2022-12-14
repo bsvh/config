@@ -1,6 +1,9 @@
-{ config, pkgs, ... }:
+{ config, pkgs, hyprland, ... }:
 
 {
+  imports = [
+    hyprland.nixosModules.default
+  ];
   i18n.defaultLocale = "en_US.UTF-8";
   time.timeZone = "America/New_York";
   
@@ -8,13 +11,11 @@
     cachix
     git
     home-manager
-    pciutils
     vim
     wget
   ];
 
-  services.udev.packages = [ pkgs.yubikey-personalization ];
-  services.pcscd.enable = true;
-
+  programs.hyprland.enable = true;
+  
   nix.settings.trusted-users = [ "root" "bsvh" ];
 }

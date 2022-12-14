@@ -1,8 +1,10 @@
 { inputs, outputs, lib, config, pkgs, ... }: {
 
   imports = [
+    inputs.impermanence.nixosModules.impermanence
     ./hardware/testbox.nix
     ./common.nix
+    ./desktops/hyprland.nix
   ];
 
   nixpkgs = {
@@ -34,6 +36,24 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  environment.persistence."/persist/system" = {
+    hideMounts = true;
+    directories = [
+      "/etc/NetworkManager/system-connections"
+      "/var/lib/bluetooth"
+      "/var/lib/systemd/coredump"
+      { directory = "/var/lib/colord"; user = "colord"; group = "colord"; mode = "u=rwx,g=rx,o="; }
+    ];
+    files = [
+      "/etc/machine-id"
+      "/etc/ssh/ssh_host_ed25519_key"
+      "/etc/ssh/ssh_host_rsa_key"
+      "/etc/ssh/ssh_host_ed25519_key.pub"
+      "/etc/ssh/ssh_host_rsa_key.pub"
+    ];
+  };
+
+  users.mutableUsers = false;
   users.users = {
     bsvh = {
       initialPassword = "changeme";
