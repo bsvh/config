@@ -22,7 +22,6 @@ in
     audacity
     celluloid
     easyeffects
-    ffmpeg-full
     firefox
     foliate
     freetube
@@ -39,7 +38,6 @@ in
     pavucontrol
     picard
     qbittorrent
-    super-slicer
     thunderbird
     vorta
     yt-dlp

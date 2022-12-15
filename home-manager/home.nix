@@ -46,7 +46,7 @@ in
     cachix
     fd
     fff
-    ffmpeg
+    ffmpeg-full
     fzf
     gcc
     hack-font
