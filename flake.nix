@@ -28,7 +28,7 @@
     helix.url = "github:helix-editor/helix";
     hyprland.url = "github:hyprwm/Hyprland";
     impermanence.url = "github:nix-community/impermanence";
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master"
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
 
   outputs = { self, nixpkgs, home-manager, hyprland, impermanence, ... }@inputs:
