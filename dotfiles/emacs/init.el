@@ -122,9 +122,17 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (require 'package)
 
-;; Force use of emacsPackages from nix
-(setq package-archives nil)
-(setq package-enable-at-startup nil)
+(if (cl-search "/nix/store" system-configuration-options)
+    (progn
+      ;; Force use of emacsPackages from nix
+      (setq package-archives nil)
+      (setq package-enable-at-startup nil))
+  (progn
+    (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages") t)
+    (eval-when-compile (require 'use-package))
+    (require 'use-package-ensure)
+    (setq use-package-always-ensure t)))
+
 (package-initialize)
 
 (use-package hide-mode-line
