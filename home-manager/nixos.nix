@@ -1,6 +1,6 @@
 { inputs, outputs, lib, config, pkgs, ... }:
 let
-  obsp = pkgs.obs-studio-plugins
+  obsp = pkgs.obs-studio-plugins;
 in
 {
   imports = [
