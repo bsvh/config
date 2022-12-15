@@ -58,7 +58,7 @@
   users.mutableUsers = false;
   users.users = {
     bsvh = {
-      initialPassword = "changeme";
+      passwordFile = /persist/system/etc/password;
       isNormalUser = true;
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINJLhTCXxyCc5upLFYajiEpLZlRmBCfC44d98lC3Ooyl cardno:13 794 712"
