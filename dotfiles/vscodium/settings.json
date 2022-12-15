@@ -1,0 +1,23 @@
+{
+  "[rust]": {
+    "editor.defaultFormatter": "rust-lang.rust-analyzer"
+  },
+  "editor.bracketPairColorization.enabled": true,
+  "editor.fontFamily": "'Hack NF FC Ligatured', 'Hack', 'Droid Sans Mono', 'monospace', monospace",
+  "editor.fontLigatures": true,
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "editor.guides.bracketPairs": "active",
+  "editor.inlayHints.enabled": true,
+  "editor.inlayHints.fontSize": 10,
+  "rust-analyzer.checkOnSave.command": "clippy",
+  "telemetry.telemetryLevel": "off",
+  "window.menuBarVisibility": "toggle",
+  "workbench.colorCustomizations": {
+    "[Default Dark+]": {
+      "editorInlayHint.background": "#1e1e1e",
+      "editorInlayHint.foreground": "#6e6d6d"
+    }
+  },
+  "workbench.colorTheme": "Default Dark+"
+}

@@ -1,0 +1,10 @@
+continuation_prompt = "▶▶"
+format = "[┌───────────────────> ](bold green)$all$line_break[│](bold green) $directory$line_break[└─$character](bold green) "
+
+[character]
+error_symbol = ">"
+success_symbol = ">"
+
+[directory]
+truncation_length = 5
+truncation_symbol = "…/"

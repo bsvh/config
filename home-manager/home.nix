@@ -66,49 +66,6 @@ in
     timg
     zola
   ];
-
-  home.file."custom.sh" = {
-    source = ../dotfiles/bash/bash_custom.sh;
-    target = ".bashrc.d/custom.sh";
-  };
-  home.file."init.el" = {
-    source = ../dotfiles/emacs/init.el;
-    target = ".config/emacs/init.el";
-  };
-  home.file."early-init.el" = {
-    source = ../dotfiles/emacs/early-init.el;
-    target = ".config/emacs/early-init.el";
-  };
-  home.file."emacsclient-open.sh" = {
-    target = ".local/bin/emacsclient-open";
-    executable = true;
-    text = ''
-    #!/usr/bin/env bash
-      emacsclient -n -e "(> (length (frame-list)) 1)" | grep -q t
-      if [[ "$?" == "1" || "$new_frame" == "yes" ]]; then
-        emacsclient --no-wait --create-frame --alternate-editor "" ''${@}
-      else
-          emacsclient --no-wait --alternate-editor "" ''${@}
-      fi
-    '';
-  };
-  home.file."emacs-protocol.desktop" = {
-    target = ".local/share/applications/org-protocol.desktop";
-    text = ''
-      [Desktop Entry]
-      Name=org-protocol
-      Exec=/home/bsvh/.local/bin/emacsclient-open %u
-      Type=Application
-      Terminal=false
-      Categories=System;
-      MimeType=x-scheme-handler/org-protocol;
-    '';
-    onChange = ''
-      which update-desktop-database 2>/dev/null && update-desktop-database ~/.local/share/applications/
-      which kbuildsyscoca5 2>/dev/null && kbuildsyscoca5
-      which xdg-mime 2>/dev/null && xdg-mime default org-protocol.desktop x-scheme-handler/org-protocol
-    '';
-  };
   home.file."imgcat.sh" = {
     source = ../scripts/imgcat.sh;
     target = ".local/bin/imgcat";
@@ -136,29 +93,7 @@ in
     epkgs.writeroom-mode
     epkgs.yuck-mode
    ];
-  programs.helix.enable = true;
-  programs.helix.package = inputs.helix.packages."x86_64-linux".default;
-  programs.helix.settings = {
-    theme = "monokai_pro_spectrum";
-    editor.bufferline = "multiple";
-  };
-  programs.helix.languages = [
-    {
-      name = "rust";
-      config.checkOnSave = { command = "clippy"; };
-    }
-  ];
   programs.home-manager.enable = true;
-  programs.fish = {
-    enable = true;
-    functions = {
-      mkcd = "mkdir -p $argv[1] && cd $argv[1]";
-      edwin = "mit-scheme --eval \"(edwin 'console)\"";
-    };
-    shellAliases = {
-      cat = "imgcat";
-    };
-  };
   programs.git = {
     enable = true;
     userName = "Brendan Van Hook";
@@ -175,26 +110,6 @@ in
   };
   programs.starship = {
     enable = true;
-    enableFishIntegration = true;
-    settings = {
-      format = lib.concatStrings [
-        "[┌───────────────────> ](bold green)"
-        "$all"
-        "$line_break"
-        "[│](bold green) $directory"
-        "$line_break"
-        "[└─$character](bold green) "
-      ];
-      continuation_prompt = "▶▶";
-      directory = {
-        truncation_length = 5;
-        truncation_symbol = "…/";
-      };
-      character = {
-        success_symbol = ">";
-        error_symbol = ">";
-      };
-    };
   };
   programs.tmux = {
     enable = true;
@@ -205,7 +120,7 @@ in
       sensible
       vim-tmux-navigator
     ];
-  } ;
+  };
   programs.vscode = {
     enable = true;
     package = pkgs.vscodium;
@@ -218,69 +133,8 @@ in
       ritwickdey.liveserver
       vscodevim.vim
     ];
-   userSettings = {
-     "editor.bracketPairColorization.enabled" = true;
-     "editor.fontFamily" = "'Hack NF FC Ligatured', 'Hack', 'Droid Sans Mono', 'monospace', monospace";
-     "editor.fontLigatures" = true;
-     "editor.formatOnSave" = true;
-     "editor.formatOnPaste" = true;
-     "editor.guides.bracketPairs" = "active";
-     "editor.inlayHints.enabled" = true;
-     "editor.inlayHints.fontSize" = 10;
-     "rust-analyzer.checkOnSave.command" = "clippy";
-     "telemetry.telemetryLevel" = "off";
-     "window.menuBarVisibility" = "toggle";
-     "workbench.colorTheme" = "Default Dark+";
-     "[rust]" = {
-       "editor.defaultFormatter" = "rust-lang.rust-analyzer";
-     };
-     "workbench.colorCustomizations" = {
-       "[Default Dark+]" = {
-         "editorInlayHint.background" = "#1e1e1e";
-         "editorInlayHint.foreground" = "#6e6d6d";
-       };
-     };
-   };
   };
-  programs.kitty = {
-    enable = true;
-    settings = {
-      font_size = "12.0";
-      font_family = "Iosevka Term";
-      font_features = "Iosevka-Term +calt +ss09";
-      bold_font = "auto";
-      italic_font = "auto";
-      bold_italic_font = "auto";
-      hide_window_decorations = true;
-      window_padding_width = "6";
-      confirm_os_window_close = "0";
-      background = "#222222";
-    };
-    theme = "Molokai";
-  };
-  programs.wezterm.enable = true;
-  programs.wezterm.extraConfig = ''
-    return {
-      set_environment_variables = {
-        TERMINFO_DIRS = '${config.home.profileDirectory}/share/terminfo',
-        WSLENV = 'TERMINFO_DIRS',
-      },
-      window_decorations = 'RESIZE',
-      term = 'wezterm',
-      enable_wayland = true,
-      color_scheme = "Molokai",
-      font = wezterm.font {
-        family = 'Iosevka Term',
-        harfbuzz_features = { "ss09", "calt" },
-      },
-      font_size = 11,
-      use_fancy_tab_bar = false,
-      hide_tab_bar_if_only_one_tab = true,
-      colors = {
-        background = "#222222",
-      },
-    }
-'';
+
 
   systemd.user.startServices = "sd-switch";
   home.stateVersion = "22.11";
