@@ -14,7 +14,10 @@ let
   });
 in
 {
-
+  imports = [ 
+    ../dotfiles
+    ../scripts
+  ];
   nixpkgs = {
     overlays = [
       inputs.emacs-overlay.overlay
@@ -25,7 +28,6 @@ in
     };
   };
 
-  fonts.fontconfig.enable = true;
   home.username = "${user}";
   home.homeDirectory = "/home/${user}";
   home.sessionVariables = {
@@ -36,7 +38,6 @@ in
     EDITOR = "hx";
   };
   home.shellAliases = {
-    vi = "hx";
     vim = "hx";
     nvim = "hx";
   };
@@ -64,35 +65,14 @@ in
     sass
     tex
     timg
+    wezterm
     zola
   ];
-  home.file."imgcat.sh" = {
-    source = ../scripts/imgcat.sh;
-    target = ".local/bin/imgcat";
-    executable = true;
-  };
-
+  programs.fish.enable = true;
   programs.emacs.enable = true;
   programs.emacs.package = pkgs.emacsPgtk;
-  programs.emacs.extraPackages = epkgs: [ 
-    epkgs.esup
-    epkgs.expand-region
-    epkgs.hide-mode-line
-    epkgs.markdown-mode
-    epkgs.mixed-pitch
-    epkgs.modus-themes
-    epkgs.move-text
-    epkgs.nix-mode
-    epkgs.org-bullets
-    epkgs.org-modern
-    epkgs.python-black
-    epkgs.pyvenv
-    epkgs.rustic
-    epkgs.use-package
-    epkgs.writegood-mode
-    epkgs.writeroom-mode
-    epkgs.yuck-mode
-   ];
+  programs.helix.enable = true;
+  programs.helix.package = inputs.helix.packages."x86_64-linux".default;
   programs.home-manager.enable = true;
   programs.git = {
     enable = true;

@@ -16,32 +16,31 @@
   fonts.fontconfig.enable = true;
 
   home.file."gpg.conf" = {
+    source = ../dotfiles/gnupg/gpg.conf;
     target = ".gnupg/gpg.conf";
-    text = ''
-      no-comments
-      no-emit-version
-      no-greeting
-      keyid-format 0xlong
-      list-options show-uid-validity
-      verify-options show-uid-validity
-      with-fingerprint
-      use-agent
-    '';
   };
   home.file."gpg-agent.conf" = {
+    source = ../dotfiles/gnupg/gpg-agent.conf;
     target = ".gnupg/gpg-agent.conf";
-    text = ''
-      pinentry-program /usr/bin/pinentry-gnome3
-      enable-ssh-support
-      default-cache-ttl 60
-      max-cache-ttl 120
-    '';
   };
   home.file."scdaemon.conf" = {
+    source = ../dotfiles/gnupg/scdaemon.conf;
     target = ".gnupg/scdaemon.conf";
     text = ''
       pcsc-shared
       card-timeout 5
     '';
+  };
+
+  xdg.configFile."wezterm_host_settings" = {
+    text = ''
+      return {
+            set_environment_variables = {
+              TERMINFO_DIRS = '${config.home.profileDirectory}/share/terminfo',
+              WSLENV = 'TERMINFO_DIRS',
+            },
+      }
+    '';
+    target = "wezterm/host_settings.lua";
   };
 }

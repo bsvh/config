@@ -3,6 +3,7 @@ local host_settings = require 'host_settings'
 wezterm.add_to_config_reload_watch_list(wezterm.config_dir)
 
 return {
+  set_environment_variables = host_settings.set_environment_variables,
   window_decorations = 'RESIZE',
   term = 'wezterm',
   enable_wayland = true,
