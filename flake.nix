@@ -65,6 +65,7 @@
 
           modules = [
             ./home-manager/standalone.nix
+            { nix.nixPath = [ "nixpkgs=${nixpkgs}" ]; }
           ];
         };
         nixos = home-manager.lib.homeManagerConfiguration {
