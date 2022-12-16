@@ -73,6 +73,7 @@
     permitRootLogin = "no";
     passwordAuthentication = true;
   };
+  services.fwupd.enable = true;
   
   # Desktop environment
   networking.networkmanager.enable = true;
