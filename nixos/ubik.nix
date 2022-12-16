@@ -31,12 +31,13 @@
     };
   };
 
-  networking.hostName = "testbox";
+  networking.hostName = "ubik";
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
   hardware.bluetooth.enable = true;
+  hardware.enableRedistributableFirmware = true;
 
   environment.persistence."/persist/system" = {
     hideMounts = true;
@@ -58,7 +59,7 @@
   users.mutableUsers = false;
   users.users = {
     bsvh = {
-      passwordFile = /persist/system/etc/password;
+      passwordFile = "/persist/system/etc/password";
       isNormalUser = true;
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINJLhTCXxyCc5upLFYajiEpLZlRmBCfC44d98lC3Ooyl cardno:13 794 712"

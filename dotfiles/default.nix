@@ -23,6 +23,10 @@
       source = wezterm/wezterm.lua;
       target = "wezterm/wezterm.lua";
     };
+    "wezterm-host" = {
+      source = wezterm/host_settings.lua;
+      target = "wezterm/host_settings.lua";
+    };
     "mkcd" = {
       source = fish/functions/mkcd.fish;
       target = "fish/functions/mkcd.fish";

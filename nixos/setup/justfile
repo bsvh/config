@@ -21,7 +21,7 @@ begin:
 	@echo Beginning preparation
 
 disklabel:
-	parted $DISK mklabel gpt
+	parted ${DISK} mklabel gpt
 
 partitions:
 	@echo Creating partitions

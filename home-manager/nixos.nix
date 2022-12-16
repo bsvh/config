@@ -16,6 +16,7 @@ in
     };
   };
 
+
   home.packages = with pkgs; [
     anki
     arduino
@@ -43,6 +44,21 @@ in
     yt-dlp
   ];
 
+  home.pointerCursor = {
+    name = "Vanilla-DMZ";
+    package = pkgs.vanilla-dmz;
+    gtk.enable = true;
+    x11.enable = true;
+  };
+
+  programs.bash.enable = true;
+  programs.bash.enableCompletion = true;
+  programs.bash.initExtra = ''
+  if [[ $(ps --no-header --pid=$PPID --format=comm) != "fish" && $(which fish 2>/dev/null) && -z $${BASH_EXECUTION_STRING} ]]; then
+  	exec fish
+  fi
+  '';
+  
   programs.gpg = {
     enable = true;
     mutableKeys = true;

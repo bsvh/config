@@ -28,13 +28,36 @@
     cachix
     git
     home-manager
+    lshw
+    usbutils
     pciutils
     vim
     wget
   ];
 
+  fonts.fonts = with pkgs; [
+    noto-fonts
+    noto-fonts-cjk
+    noto-fonts-emoji
+    liberation_ttf
+    fira-code
+    fira-code-symbols
+    hack-font
+    montserrat
+    stix-two
+    crimson
+    alegreya
+    iosevka
+    cantarell-fonts
+    qt6.qtwayland
+    libsForQt5.qt5.qtwayland
+    libsForQt5.breeze-icons
+  ];
+  fonts.fontDir.enable = true;
+
   services.udev.packages = [ pkgs.yubikey-personalization ];
   services.pcscd.enable = true;
+  services.flatpak.enable = true;
 
   nix.settings.trusted-users = [ "root" "bsvh" ];
 }

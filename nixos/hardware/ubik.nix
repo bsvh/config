@@ -17,51 +17,52 @@
     };
 
   fileSystems."/var/logs" =
-    { device = "/dev/disk/by-partlabel/EncryptedNixOS";
+    { device = "/dev/mapper/luksdev";
       fsType = "btrfs";
       options = [ "subvol=@nixos-logs" "compress=zstd" "noatime" ];
     };
 
-  boot.initrd.luks.devices."luksdev".device = "/dev/disk/by-uuid/a84878b6-a92e-40b3-8b17-ab253964a1e7";
+  boot.initrd.luks.devices."luksdev".device = "/dev/disk/by-partlabel/EncryptedNixOS";
 
   fileSystems."/swap" =
-    { device = "/dev/disk/by-partlabel/EncryptedNixOS";
+    { device = "/dev/mapper/luksdev";
       fsType = "btrfs";
       options = [ "subvol=@swap" "compress=zstd" "noatime" ];
     };
 
   fileSystems."/home" =
-    { device = "/dev/disk/by-partlabel/EncryptedNixOS";
+    { device = "/dev/mapper/luksdev";
       fsType = "btrfs";
       options = [ "subvol=@home" "compress=zstd" "noatime" ];
     };
 
   fileSystems."/nix" =
-    { device = "/dev/disk/by-partlabel/EncryptedNixOS";
+    { device = "/dev/mapper/luksdev";
       fsType = "btrfs";
       options = [ "subvol=@nix" "compress=zstd" "noatime" ];
     };
 
   fileSystems."/files" =
-    { device = "/dev/disk/by-partlabel/EncryptedNixOS";
+    { device = "/dev/mapper/luksdev";
       fsType = "btrfs";
       options = [ "subvol=@files" "compress=zstd" "noatime" ];
     };
 
   fileSystems."/persist" =
-    { device = "/dev/disk/by-partlabel/EncryptedNixOS";
+    { device = "/dev/mapper/luksdev";
       fsType = "btrfs";
       options = [ "subvol=@persist" "compress=zstd" "noatime" ];
+      neededForBoot = true;
     };
 
   fileSystems."/var/lib/flatpak" =
-    { device = "/dev/disk/by-partlabel/EncryptedNixOS";
+    { device = "/dev/mapper/luksdev";
       fsType = "btrfs";
       options = [ "subvol=@flatpak" "compress=zstd" "noatime" ];
     };
 
   fileSystems."/var/lib/libvirt" =
-    { device = "/dev/disk/by-partlabel/EncryptedNixOS";
+    { device = "/dev/mapper/luksdev";
       fsType = "btrfs";
       options = [ "subvol=@libvirt" "compress=zstd" "noatime" ];
     };
