@@ -44,17 +44,12 @@
     in 
     rec {
       nixosConfigurations = {
-        testbox = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs outputs hyprland; };
-          modules = [
-            ./nixos/testbox.nix
-          ];
-        };
         ubik = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs hyprland; };
           modules = [
             ./nixos/ubik.nix
             inputs.nixos-hardware.nixosModules.framework
+            hyprland.nixosModules.default
           ];
         };
       };
