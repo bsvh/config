@@ -80,8 +80,7 @@
     "%b"))
 (defun set-header-if-needed ()
   (if (or (string= major-mode "fundamental")
-	  (boundp 'org-capture-mode)
-	  (boundp 'org-src-mode))
+	  (boundp 'org-capture-mode))
       nil
       (setq header-line-format
      	    (center-header-line (short-filename-or-buffer)))))
