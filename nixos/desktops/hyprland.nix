@@ -1,19 +1,28 @@
 { config, pkgs, hyprland, ... }:
 
+let
+  qt = pkgs.libsForQt5;
+in
 {
-  imports = [
-    hyprland.nixosModules.default
-  ];
-  i18n.defaultLocale = "en_US.UTF-8";
-  time.timeZone = "America/New_York";
-  
   environment.systemPackages = with pkgs; [
-    cachix
-    git
-    home-manager
-    vim
-    wget
+    adwaita-qt
+    breeze-qt5
+    dex
+    gnome.adwaita-icon-theme
+    hyprpaper
+    light
+    lxqt.pavucontrol-qt
+    mako
+    qt.dolphin
+    qt.qt5ct
+    qt.polkit-qt
+    wofi
+    waybar
   ];
+  environment.sessionVariables = {
+    QT_QPA_PLATFORM = "wayland;xcb";
+    QT_QPT_PLATFORMTHEME = "qt5ct";
+  };
 
   programs.hyprland.enable = true;
   
