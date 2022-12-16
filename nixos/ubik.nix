@@ -50,6 +50,7 @@
       "/etc/NetworkManager/system-connections"
       "/var/lib/bluetooth"
       "/var/lib/systemd/coredump"
+      "/var/lib/fprint"
       { directory = "/var/lib/colord"; user = "colord"; group = "colord"; mode = "u=rwx,g=rx,o="; }
     ];
     files = [
