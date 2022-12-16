@@ -26,11 +26,14 @@
   
   environment.systemPackages = with pkgs; [
     cachix
+    font-manager
+    fsearch
     git
     home-manager
     lshw
     usbutils
     pciutils
+    unzip
     vim
     wget
   ];
@@ -62,6 +65,7 @@
   services.avahi.enable = true;
   services.avahi.openFirewall = true;
   services.ipp-usb.enable = true;
+  services.udisks2.enable = true;
 
   nix.settings.trusted-users = [ "root" "bsvh" ];
 }
