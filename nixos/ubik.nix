@@ -83,6 +83,7 @@
   
   environment.systemPackages = with pkgs; [
     helix
+    yubikey-touch-detector
   ];
   
   programs.gnupg.agent = {
