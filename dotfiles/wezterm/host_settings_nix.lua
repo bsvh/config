@@ -5,5 +5,6 @@ return {
       set_environment_variables = {
         TERMINFO_DIRS = '${config.home.profileDirectory}/share/terminfo',
         WSLENV = 'TERMINFO_DIRS',
+        VTE_VERSION = '6003',
       },
 }

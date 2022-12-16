@@ -1,0 +1,21 @@
+* {
+    /* `otf-font-awesome` is required to be installed for icons */
+    font-family: Hack NF FC Ligatured, FontAwesome, Hack, Roboto, Helvetica, Arial, sans-serif;
+    font-size: 13px;
+}
+window#waybar {
+    background-color: rgba(43, 48, 59, 1.0);
+    color: #ffffff;
+}
+
+.modules-right * {
+    padding-right: 10px;
+}
+
+#workspaces button.active {
+    background: #ff0000;
+}
+
+#idle_inhibitor.deactivated {
+    color: shade(alpha(@borders, 0.7), 1.25);
+}
