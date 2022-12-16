@@ -1,6 +1,7 @@
 { inputs, outputs, lib, config, pkgs, ... }:
 let
   obsp = pkgs.obs-studio-plugins;
+  qt = pkgs.libsForQt5;
 in
 {
   imports = [
@@ -28,6 +29,10 @@ in
     templates = "${config.home.homeDirectory}/templates";
     publicShare = "${config.home.homeDirectory}/public";
   };
+  home.sessionVariables = {
+    QT_QPA_PLATFORMTHEME = "qt5ct";
+    QT_QPA_PLATFORM="wayland;xcb";
+  };
 
   home.packages = with pkgs; [
     anki
@@ -35,11 +40,13 @@ in
     audacity
     celluloid
     easyeffects
+    element-desktop-wayland
     firefox
     foliate
     freetube
     gimp-with-plugins
     inkscape-with-extensions
+    lxappearance-gtk2
     keepassxc
     mpv
     nicotine-plus
@@ -51,16 +58,16 @@ in
     pavucontrol
     picard
     qbittorrent
+    qt.breeze-icons
     thunderbird
     vorta
     yt-dlp
   ];
 
   home.pointerCursor = {
-    name = "Vanilla-DMZ";
-    package = pkgs.vanilla-dmz;
+    name = "Adwaita";
+    package = pkgs.gnome.adwaita-icon-theme;
     gtk.enable = true;
-    x11.enable = true;
   };
 
   programs.bash.enable = true;
