@@ -58,6 +58,10 @@
   services.udev.packages = [ pkgs.yubikey-personalization ];
   services.pcscd.enable = true;
   services.flatpak.enable = true;
+  services.printing.enable = true;
+  services.avahi.enable = true;
+  services.avahi.openFirewall = true;
+  services.ipp-usb.enable = true;
 
   nix.settings.trusted-users = [ "root" "bsvh" ];
 }
