@@ -88,6 +88,11 @@ in
       };
     };
   };
+  programs.nix-index = {
+    enable = true;
+    enableFishIntegration = true;
+    enableBashIntegration = true;
+  };
   programs.starship = {
     enable = true;
   };
