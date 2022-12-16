@@ -39,6 +39,11 @@
   hardware.bluetooth.enable = true;
   hardware.enableRedistributableFirmware = true;
 
+  environment.variables = {
+    EDITOR = "hx";
+    VISUAL = "hx";
+  };
+
   environment.persistence."/persist/system" = {
     hideMounts = true;
     directories = [
