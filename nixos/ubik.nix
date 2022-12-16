@@ -70,7 +70,7 @@
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINJLhTCXxyCc5upLFYajiEpLZlRmBCfC44d98lC3Ooyl cardno:13 794 712"
       ];
-      extraGroups = [ "wheel" ];
+      extraGroups = [ "wheel" "video" "networkmanager" ];
     };
   };
 
