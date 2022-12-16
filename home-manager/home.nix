@@ -115,6 +115,17 @@ in
     ];
   };
 
+  xdg.configFile."stop-gnome-ssh" = {
+    target = "autostart/gnome-keyring-ssh.desktop";
+    text = ''
+      [Desktop Entry]
+      Type=Application
+      Name=SSH Key Agent
+      Comment=Prevent gnome-keyring from using ssh
+      OnlyShowIn=GNOME;Unity;MATE;
+      Hidden=true
+    '';
+  };
 
   systemd.user.startServices = "sd-switch";
   home.stateVersion = "22.11";
