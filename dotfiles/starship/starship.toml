@@ -8,3 +8,16 @@ success_symbol = ">"
 [directory]
 truncation_length = 5
 truncation_symbol = "…/"
+
+[git_status]
+modified = "  "
+staged = ' \($count)'
+untracked = " "
+up_to_date = " "
+conflicted = "😵 "
+diverged = "  "
+ahead = ' \(${count}\) '
+behind = ' \(${count}\) '
+deleted = " "
+renamed = " "
+format = '([$all_status$ahead_behind]($style) )'
