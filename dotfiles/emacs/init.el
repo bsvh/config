@@ -66,29 +66,6 @@
 			     (match-string 1 (buffer-string)))))
       (setq frame-title-format '("" "%b - GNU Emacs @ " toolbox-name ".toolbox"))))
 
-;; Add header bar
-(defun center-header-line (text)
-  (let ((left-padding
-	 (/ (- (window-total-width) (length (format-mode-line text))) 2)))
-    (concat
-     (format
-      (format "%%%ds" left-padding) "")
-     text)))
-(defun short-filename-or-buffer ()
-  (if (buffer-file-name)
-      (abbreviate-file-name buffer-file-name)
-    "%b"))
-(defun set-header-if-needed ()
-  (if (or (string= major-mode "fundamental")
-	  (boundp 'org-capture-mode))
-      nil
-      (setq header-line-format
-     	    (center-header-line (short-filename-or-buffer)))))
-(add-hook 'buffer-list-update-hook
-	  'set-header-if-needed)
-(add-hook 'window-size-change-functions
-	  'set-header-if-needed)
-
 
 (add-to-list 'default-frame-alist '(height . 50))
 (add-to-list 'default-frame-alist '(width . 90))
@@ -139,6 +116,17 @@
   (add-hook 'markdown-mode-hook #'hide-mode-line-mode)
   :bind ("<f8>" . hide-mode-line-mode))
 
+;; Change color of header-line box (used for padding) to background color
+(defun my-update-colors ()
+  (interactive)
+  (modus-themes-load-themes)
+  (if (eq (modus-themes--current-theme) 'modus-operandi)
+      (face-remap-add-relative 'header-line nil '(:box (:line-width 12 :color "white")))
+    (face-remap-add-relative 'header-line nil '(:box (:line-width 12 :color "black"))))
+  (set-face-attribute 'fringe nil
+		      :foreground (face-foreground 'default)
+		      :background (face-background 'default)))
+
 (use-package modus-themes
   :init
   (setq modus-themes-italic-constructs t
@@ -149,15 +137,35 @@
   (modus-themes-load-themes)
   :config
   (modus-themes-load-operandi)
-  ;; Change color of header-line box (used for padding) to background color
-  (defun my-update-header-box ()
-    (interactive)
-    (modus-themes-load-themes)
-    (if (eq (modus-themes--current-theme) 'modus-operandi)
-	(face-remap-add-relative 'header-line nil '(:box (:line-width 12 :color "white")))
-      (face-remap-add-relative 'header-line nil '(:box (:line-width 12 :color "black")))))
-  (advice-add 'modus-themes-toggle :after #'my-update-header-box)
+  
+  (advice-add 'modus-themes-toggle :after #'my-update-colors)
   :bind ("<f5>" . modus-themes-toggle))
+
+
+
+;; Add header bar
+(defun center-header-line (text)
+  (let ((left-padding
+	 (/ (- (window-total-width) (length (format-mode-line text))) 2)))
+    (concat
+     (format
+      (format "%%%ds" left-padding) "")
+     text)))
+(defun short-filename-or-buffer ()
+  (if (buffer-file-name)
+      (abbreviate-file-name buffer-file-name)
+    "%b"))
+(defun set-header-if-needed ()
+  (if (or (string= major-mode "fundamental")
+	  (boundp 'org-capture-mode))
+      nil
+    (setq header-line-format
+     	  (center-header-line (short-filename-or-buffer)))))
+
+;; Update header-line and fringe
+(add-hook 'buffer-list-update-hook 'set-header-if-needed)
+(add-hook 'buffer-list-update-hook 'my-update-colors)
+(add-hook 'window-size-change-functions 'set-header-if-needed)
 
 
 (require 'org-protocol)
@@ -319,7 +327,8 @@
  '(warning-suppress-log-types '((comp)))
  '(warning-suppress-types '((emacs) (emacs) (comp))))
 (custom-set-faces
- '(header-line ((t (:foreground "#7a7a7a" :background "inherit" :slant italic :box (:line-width 12 :color "white")))))
+ '(fringe ((t (:background "inherit" :foreground "inherit"))))
+ '(header-line ((t :foreground "#7a7a7a" :background "inherit" :slant italic :box (:line-width 12 :color "white"))))
  '(markdown-header-face-1 ((t (:inherit default :foreground "#000000" :family "Albert Sans Light" :weight light :height 1.8))))
  '(markdown-header-face-2 ((t (:inherit default :foreground "#000000" :family "Albert Sans Light" :weight light :height 1.4))))
  '(markdown-header-face-3 ((t (:inherit default :foreground "#000000" :family "Spectral SC Extralight" :weight extra-light :height 1.0))))
