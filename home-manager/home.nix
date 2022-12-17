@@ -70,22 +70,10 @@ in
   ];
   programs.fish.enable = true;
   programs.fish.interactiveShellInit = ''
-    function __wezterm_mark_prompt_start --on-event fish_prompt --on-event fish_cancel --on-event fish_posterror
-        test "$__wezterm_prompt_state" != prompt-start
-        and echo -en "\e]133;D\a"
-        set --global __wezterm_prompt_state prompt-start
-        echo -en "\e]133;A\a"
+    if test "$TERM" != dumb -a \( -z "$INSIDE_EMACS" -o "$INSIDE_EMACS" = vterm \)
+        eval (/home/bsvh/.nix-profile/bin/starship init fish)
     end
-
-    function __wezterm_mark_output_start --on-event fish_preexec
-        set --global __wezterm_prompt_state pre-exec
-        echo -en "\e]133;C\a"
-    end
-
-    function __wezterm_mark_output_end --on-event fish_postexec
-        set --global __wezterm_prompt_state post-exec
-        echo -en "\e]133;D;$status\a"
-    end
+    enable_transience
   '';
   programs.emacs.enable = true;
   programs.emacs.package = pkgs.emacsPgtk;
@@ -113,6 +101,9 @@ in
   };
   programs.starship = {
     enable = true;
+    # Disabled here b/c need transient prompt needs to be run after starship
+    # Enabled manually in fish.interactiveShellInit
+    enableFishIntegration = false;
   };
   programs.tmux = {
     enable = true;
@@ -148,6 +139,22 @@ in
       OnlyShowIn=GNOME;Unity;MATE;
       Hidden=true
     '';
+  };
+
+  programs.kitty = {
+    enable = true;
+    settings = {
+      font_size = "10.0";
+      font_family = "Hack NF FC Ligatured";
+      bold_font = "auto";
+      italic_font = "auto";
+      bold_italic_font = "auto";
+      hide_window_decorations = true;
+      window_padding_width = "6";
+      confirm_os_window_close = "0";
+      background = "#222222";
+    };
+    theme = "Monokai";
   };
 
   systemd.user.startServices = "sd-switch";
