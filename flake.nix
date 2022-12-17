@@ -33,6 +33,9 @@
 
   outputs = { self, nixpkgs, home-manager, hyprland, impermanence, ... }@inputs:
     let
+      vars = {
+        desktop = "gnome";
+      };
       inherit (self) outputs;
       forAllSystems = nixpkgs.lib.genAttrs [
         "aarch64-linux"
@@ -45,9 +48,10 @@
     rec {
       nixosConfigurations = {
         ubik = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs outputs hyprland; };
+          specialArgs = { inherit inputs outputs hyprland vars; };
           modules = [
             ./nixos/ubik.nix
+            ./nixos/desktop-settings.nix
             inputs.nixos-hardware.nixosModules.framework
             hyprland.nixosModules.default
           ];
@@ -56,19 +60,21 @@
       homeConfigurations = {
         standalone = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          extraSpecialArgs = { inherit inputs outputs; };
+          extraSpecialArgs = { inherit inputs outputs vars; };
 
           modules = [
             ./home-manager/standalone.nix
+            ./nixos/desktop-settings.nix
             { nix.nixPath = [ "nixpkgs=${nixpkgs}" ]; }
           ];
         };
         nixos = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          extraSpecialArgs = { inherit inputs outputs; };
+          extraSpecialArgs = { inherit inputs outputs vars; };
 
           modules = [
             ./home-manager/nixos.nix
+            ./nixos/desktop-settings.nix
             hyprland.homeManagerModules.default
           ];
         };
