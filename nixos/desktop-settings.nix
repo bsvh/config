@@ -4,26 +4,32 @@ with lib;
 
 {
   options = {
-    desktops.useGnome = mkOption {
-      type = types.bool;
-      default = false;
-      description = ''
-        Enable the GNOME desktop environment.
-      '';
+    desktops.gnome = {
+      enable = mkOption {
+        type = types.bool;
+        default = false;
+        description = ''
+          Enable the GNOME desktop environment.
+        '';
+      };
     };
-    desktops.useHyprland = mkOption {
-      type = types.bool;
-      default = false;
-      description = ''
-        Enable the Hyprland desktop environment.
-      '';
+    desktops.hyprland = {
+      enable = mkOption {
+        type = types.bool;
+        default = false;
+        description = ''
+          Enable the hyprland desktop environment.
+        '';
+      };
     };
-    desktops.useKde = mkOption {
-      type = types.bool;
-      default = false;
-      description = ''
-        Enable the KDE desktop environment.
-      '';
+    desktops.kde= {
+      enable = mkOption {
+        type = types.bool;
+        default = false;
+        description = ''
+          Enable the KDE desktop environment.
+        '';
+      };
     };
   };
 }
