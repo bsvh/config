@@ -25,6 +25,10 @@ in
   };
 
   programs.hyprland.enable = true;
+
+  security.pam.services.swaylock = {
+    text = "auth include login";
+  };
   
   nix.settings.trusted-users = [ "root" "bsvh" ];
 }
