@@ -4,7 +4,7 @@
   imports = [ 
     ./emacs
     ./gnome
-    ./hyprland
+    ./hypr
    ];
   xdg.configFile = {
     "early-init.el" = {
