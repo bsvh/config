@@ -1,10 +1,10 @@
-{ config, pkgs, hyprland, ... }:
+{ config, pkgs, hyprland, lib, ... }:
 
 let
   qt = pkgs.libsForQt5;
 in
-{
-  environment.systemPackages = with pkgs; [
+lib.mkIf (config.desktops.hyprland.enable == true) {
+  environment.systemPackages = (with pkgs; [
     adwaita-qt
     breeze-qt5
     dex
@@ -13,12 +13,14 @@ in
     light
     lxqt.pavucontrol-qt
     mako
-    qt.dolphin
-    qt.qt5ct
-    qt.polkit-qt
+t
     wofi
     waybar
-  ];
+  ]) ++ (with pkgs.libForQt5; [
+    dolphin
+    qt5ct
+    polkit-qt
+  ]);
   environment.sessionVariables = {
     QT_QPA_PLATFORM = "wayland;xcb";
     QT_QPT_PLATFORMTHEME = "qt5ct";

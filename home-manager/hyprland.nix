@@ -1,6 +1,6 @@
 { pkgs, lib, config, default, ... }:
 
-{
+lib.mkIf (config.desktops.hyprland.enable == true) {
   home.sessionVariables = {
     _JAVA_AWT_WM_NONREPARENTING = "1";
     MOZ_ENABLE_WAYLAND = "1";

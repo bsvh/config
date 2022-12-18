@@ -5,6 +5,7 @@
     ./hardware/ubik.nix
     ./common.nix
     ./desktops/hyprland.nix
+    ./desktops/gnome.nix
   ];
 
   nixpkgs = {
@@ -31,6 +32,7 @@
     };
   };
 
+  desktops.gnome.enable = true;
   networking.hostName = "ubik";
 
   boot.loader.systemd-boot.enable = true;

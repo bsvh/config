@@ -12,6 +12,27 @@ with lib;
           Enable the GNOME desktop environment.
         '';
       };
+      swapEscape = mkOption {
+        type = types.bool;
+        default = false;
+        description = ''
+          Swap the caps lock key with the escape key.
+        '';
+      };
+      terminalCommand = mkOption {
+        type = types.str;
+        default = "kitty";
+        description = ''
+          Command to run to invoke a terminal.
+        '';
+      };
+      terminalCommandLight = mkOption {
+        type = types.str;
+        default = "kitty -c ${config.xdg.configHome}/kitty-light.conf";
+        description = ''
+          Command to run to invoke a terminal.
+        '';
+      };
     };
     desktops.hyprland = {
       enable = mkOption {
@@ -22,7 +43,7 @@ with lib;
         '';
       };
     };
-    desktops.kde= {
+    desktops.kde = {
       enable = mkOption {
         type = types.bool;
         default = false;
