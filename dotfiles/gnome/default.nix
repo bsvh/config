@@ -5,6 +5,7 @@ let
   desktop = config.desktops.gnome;
 in
 lib.mkIf (desktop.enable == true) {
+  services.gpg-agent.pinentryFlavor = "gnome3";
   dconf.settings = {
     "org/gnome/desktop/input-sources" = {
       per-window = false;
