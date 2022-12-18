@@ -40,33 +40,6 @@ in
   };
 
   home.packages = with pkgs; [
-    anki
-    arduino
-    audacity
-    celluloid
-    easyeffects
-    element-desktop-wayland
-    firefox
-    foliate
-    freetube
-    gimp-with-plugins
-    inkscape-with-extensions
-    lxappearance-gtk2
-    keepassxc
-    mpv
-    nicotine-plus
-    obs-studio
-    obsp.wlrobs
-    obsp.obs-gstreamer
-    obsp.input-overlay
-    obsp.obs-pipewire-audio-capture
-    pavucontrol
-    picard
-    qbittorrent
-    qt.breeze-icons
-    thunderbird
-    vorta
-    yt-dlp
   ];
 
   home.pointerCursor = {

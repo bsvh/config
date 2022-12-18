@@ -19,24 +19,23 @@ lib.mkIf (desktop.enable == true) {
   services.xserver.desktopManager.gnome.enable = true;
   services.udev.packages = with pkgs; [ gnome.gnome-settings-daemon ];
 
-  environment.systemPackages = (with pkgs.gnomeExtensions; [
-    appindicator
-    dash-to-dock
-    gsconnect
-    just-perfection
-    night-theme-switcher
-    places-status-indicator
-    pop-shell
-  ]) ++ (with pkgs.gnome; [
+  environment.systemPackages = (with pkgs.gnome; [
     gnome-tweaks
   ]) ++ (with pkgs; [
     amberol
     apostrophe
     blanket
     celluloid
+    foliate
     lollypop
     pika-backup
+    qgnomeplatform
     video-trimmer
     wike
   ]);
+
+  environment.sessionVariables = {
+    QT_QPA_PLATFORMTHEME = "gnome";
+    QT_QPA_PLATFORM = "wayland;xcb";
+  };
 }

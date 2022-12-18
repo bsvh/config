@@ -6,6 +6,16 @@ let
 in
 lib.mkIf (desktop.enable == true) {
   services.gpg-agent.pinentryFlavor = "gnome3";
+  home.packages = with pkgs.gnomeExtensions; [
+    appindicator
+    dash-to-dock
+    gsconnect
+    improved-workspace-indicator
+    just-perfection
+    night-theme-switcher
+    pop-shell
+  ];
+
   dconf.settings = {
     "org/gnome/desktop/input-sources" = {
       per-window = false;
@@ -69,13 +79,13 @@ lib.mkIf (desktop.enable == true) {
     };
 
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
-      binding = "<Super>Return";
+      binding = "<Super>t";
       command = "${desktop.terminalCommand}";
       name = "Open Terminal";
     };
 
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" = {
-      binding = "<Shift><Super>Return";
+      binding = "<Shift><Super>t";
       command = "${desktop.terminalCommandLight}";
       name = "Open Terminal (Light Colorscheme)";
     };
@@ -87,7 +97,16 @@ lib.mkIf (desktop.enable == true) {
 
     "org/gnome/shell" = {
       disable-user-extensions = false;
-      enabled-extensions = [ "dash-to-dock@micxgx.gmail.com" "gsconnect@andyholmes.github.io" "just-perfection-desktop@just-perfection" "nightthemeswitcher@romainvigier.fr" "places-menu@gnome-shell-extensions.gcampax.github.com" "workspace-indicator@gnome-shell-extensions.gcampax.github.com" "appindicatorsupport@rgcjonas.gmail.com" ];
+      enabled-extensions = [ 
+        "appindicatorsupport@rgcjonas.gmail.com"
+        "dash-to-dock@micxgx.gmail.com"
+        "gsconnect@andyholmes.github.io"
+        "improved-workspace-indicator@michaelaquilina.github.io"
+        "nightthemeswitcher@romainvigier.fr"
+        "pop-shell@system76.com"
+        "workspace-indicator@gnome-shell-extensions.gcampax.github.com"
+        "just-perfection-desktop@just-perfection"
+      ];
       welcome-dialog-last-shown-version = "43.2";
     };
 
@@ -116,13 +135,29 @@ lib.mkIf (desktop.enable == true) {
       show-trash = false;
     };
 
+    "org/gnome/shell/extensions/improved-workspace-indicator" = {
+      panel-position = "left";
+    };
+
     "org/gnome/shell/extensions/just-perfection" = {
       accessibility-menu = false;
+      activities-button=false;
       app-menu = false;
       app-menu-label = true;
+      panel-button-padding-size = 5;
+      panel-indicator-padding-size = 5;
       ripple-box = false;
       show-apps-button = true;
       workspace-popup = false;
+    };
+
+    "org/gnome/shell/extensions/pop-shell" = {
+      active-hint = true;
+      active-hint-border-radius = mkUint32 1;
+      gap-outer = mkUint32 1;
+      gap-inner = mkUint32 1;
+      tile-by-default = true;
+      smart-gaps = false; # Buggy with active hints.
     };
 
     "org/gnome/shell/keybindings" = {

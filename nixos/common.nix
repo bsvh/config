@@ -24,19 +24,41 @@
   	'';
   };
   
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = (with pkgs; [
+    anki
+    arduino
+    audacity
     cachix
+    easyeffects
+    element-desktop-wayland
+    firefox
     font-manager
+    freetube
     fsearch
+    gimp-with-plugins
     git
     home-manager
+    inkscape-with-extensions
+    keepassxc
     lshw
+    mpv
+    nicotine-plus
+    obs-studio
     usbutils
     pciutils
+    picard
+    qbittorrent
+    thunderbird
     unzip
     vim
     wget
-  ];
+    yt-dlp
+  ]) ++ (with pkgs.obs-studio-plugins; [
+    wlrobs
+    obs-gstreamer
+    input-overlay
+    obs-pipewire-audio-capture
+  ]);
 
   fonts.fonts = with pkgs; [
     noto-fonts
