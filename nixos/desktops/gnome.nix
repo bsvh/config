@@ -13,6 +13,7 @@ lib.mkIf (desktop.enable == true) {
     epiphany
   ]);
 
+  programs.dconf.enable = true;
   services.geoclue2.enable = true;
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;

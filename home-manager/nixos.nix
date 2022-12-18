@@ -7,6 +7,7 @@ in
   imports = [
     ./home.nix
     ./hyprland.nix
+    ../dotfiles/gnome
   ];
 
   nixpkgs = {
@@ -17,6 +18,9 @@ in
       allowUnfreePredicate = (_: true);
     };
   };
+
+  desktops.gnome.enable = true;
+  desktops.gnome.swapEscape = true;
 
   xdg.userDirs = {
     enable = true;
