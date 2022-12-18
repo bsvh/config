@@ -1,7 +1,11 @@
 { config,  ... }:
 
 {
-  imports = [ ./emacs ];
+  imports = [ 
+    ./emacs
+    ./gnome
+    ./hyprland
+   ];
   xdg.configFile = {
     "early-init.el" = {
       source = emacs/early-init.el;

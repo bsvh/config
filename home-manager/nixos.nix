@@ -6,8 +6,6 @@ in
 {
   imports = [
     ./home.nix
-    ./hyprland.nix
-    ../dotfiles/gnome
   ];
 
   nixpkgs = {
