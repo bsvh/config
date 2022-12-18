@@ -65,6 +65,7 @@ in
     sass
     tex
     timg
+    yubikey-touch-detector
     wezterm
     zola
   ];
@@ -138,6 +139,16 @@ in
       Comment=Prevent gnome-keyring from using ssh
       OnlyShowIn=GNOME;Unity;MATE;
       Hidden=true
+    '';
+  };
+  xdg.configFile."start-yubikey-touch-detector" = {
+    target = "autostart/yubikey-touch-detector.desktop";
+    text = ''
+      [Desktop Entry]
+      Type=Application
+      Name=Yubikey Touch Detector
+      Exec=yubikey-touch-detector -libnotify
+      Comment=Start Yubikey Touch Detector
     '';
   };
 
