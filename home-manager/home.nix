@@ -42,7 +42,6 @@ in
     nvim = "hx";
   };
   home.packages = with pkgs; [
-    anki
     bacon
     cachix
     fd
