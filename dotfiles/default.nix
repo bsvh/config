@@ -15,9 +15,13 @@
       source = emacs/init.el;
       target = "emacs/init";
     };
-  "helix" = {
-      source = helix/config.toml;
-      target = "helix/config.toml";
+    "helix" = {
+        source = helix/config.toml;
+        target = "helix/config.toml";
+    };
+    "helix-light" = {
+        source = helix/light-config.toml;
+        target = "helix/light-config.toml";
     };
     "helix-languages" = {
       source = helix/languages.toml;
@@ -38,6 +42,10 @@
     "edwin" = {
       source = fish/functions/edwin.fish;
       target = "fish/functions/edwin.fish";
+    };
+    "helix-alias" = {
+      source = fish/functions/hx.fish;
+      target = "fish/functions/hx.fish";
     };
     "starship" = {
       source = starship/starship.toml;

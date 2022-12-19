@@ -1,0 +1,4 @@
+theme = "emacs"
+
+[editor]
+bufferline = "multiple"

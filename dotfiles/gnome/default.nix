@@ -86,7 +86,7 @@ lib.mkIf (desktop.enable == true) {
 
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" = {
       binding = "<Shift><Super>t";
-      command = "${desktop.terminalCommandLight}";
+      command = "env LIGHT_TERMINAL_THEME=1 ${desktop.terminalCommandLight}";
       name = "Open Terminal (Light Colorscheme)";
     };
 
@@ -149,6 +149,10 @@ lib.mkIf (desktop.enable == true) {
       ripple-box = false;
       show-apps-button = true;
       workspace-popup = false;
+    };
+
+    "org/gnome/shell/extensions/nightthemeswitcher/time" = {
+      nightthemeswitcher-ondemand-keybinding = [ "" ];
     };
 
     "org/gnome/shell/extensions/pop-shell" = {

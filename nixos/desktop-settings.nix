@@ -28,7 +28,7 @@ with lib;
       };
       terminalCommandLight = mkOption {
         type = types.str;
-        default = "kitty -c ${config.xdg.configHome}/kitty-light.conf";
+        default = "kitty -c ${config.xdg.configHome}/kitty/kitty-light.conf";
         description = ''
           Command to run to invoke a terminal.
         '';
