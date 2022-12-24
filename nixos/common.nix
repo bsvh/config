@@ -31,7 +31,7 @@
     cachix
     easyeffects
     element-desktop-wayland
-    firefox
+    firefox-wayland
     font-manager
     freetube
     fsearch
@@ -58,6 +58,13 @@
     obs-gstreamer
     input-overlay
     obs-pipewire-audio-capture
+  ]) ++ (with pkgs.gst_all_1; [
+    gstreamer
+    gst-vaapi
+    gst-plugins-base
+    gst-plugins-good
+    gst-plugins-bad
+    gst-plugins-ugly
   ]);
 
   fonts.fonts = with pkgs; [
@@ -72,7 +79,7 @@
     stix-two
     crimson
     alegreya
-    iosevka
+    iosevka-bin
     cantarell-fonts
     qt6.qtwayland
     libsForQt5.qt5.qtwayland
