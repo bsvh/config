@@ -7,6 +7,7 @@ in
 lib.mkIf (desktop.enable == true) {
   services.gpg-agent.pinentryFlavor = "gnome3";
   home.packages = with pkgs.gnomeExtensions; [
+    adjust-display-brightness
     appindicator
     dash-to-dock
     gsconnect
@@ -14,7 +15,14 @@ lib.mkIf (desktop.enable == true) {
     just-perfection
     night-theme-switcher
     pop-shell
+    rounded-window-corners
+    pkgs.adw-gtk3
   ];
+
+  gtk.theme = {
+    name = "adw-gtk3";
+    package = pkgs.adw-gtk3;
+  };
 
   dconf.settings = {
     "org/gnome/desktop/input-sources" = {
@@ -27,7 +35,7 @@ lib.mkIf (desktop.enable == true) {
 
     "org/gnome/desktop/interface" = {
       color-scheme = "prefer-dark";
-      text-scaling-factor = 1.3;
+      text-scaling-factor = 1.0;
     };
 
     "org/gnome/desktop/peripherals/touchpad" = {
@@ -101,10 +109,11 @@ lib.mkIf (desktop.enable == true) {
         "appindicatorsupport@rgcjonas.gmail.com"
         "dash-to-dock@micxgx.gmail.com"
         "gsconnect@andyholmes.github.io"
+        "gnome-extension-brightness@bruno.englert.gitlab.com"
         "improved-workspace-indicator@michaelaquilina.github.io"
         "nightthemeswitcher@romainvigier.fr"
         "pop-shell@system76.com"
-        "workspace-indicator@gnome-shell-extensions.gcampax.github.com"
+        "rounded-window-corners@yilozt"
         "just-perfection-desktop@just-perfection"
       ];
       welcome-dialog-last-shown-version = "43.2";
