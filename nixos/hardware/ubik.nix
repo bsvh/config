@@ -20,6 +20,7 @@
     { device = "/dev/mapper/luksdev";
       fsType = "btrfs";
       options = [ "subvol=@nixos-logs" "compress=zstd" "noatime" ];
+      neededForBoot = true;
     };
 
   boot.initrd.luks.devices."luksdev".device = "/dev/disk/by-partlabel/EncryptedNixOS";
