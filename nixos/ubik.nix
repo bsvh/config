@@ -38,6 +38,11 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  zramSwap.enable = true;
+
+  hardware.i2c.enable = true;
+  services.ddccontrol.enable = true;
+
   hardware.bluetooth.enable = true;
   hardware.enableRedistributableFirmware = true;
 
@@ -45,6 +50,8 @@
     EDITOR = "hx";
     VISUAL = "hx";
   };
+
+  programs.fuse.userAllowOther = true;
 
   environment.persistence."/persist/system" = {
     hideMounts = true;
@@ -72,7 +79,7 @@
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINJLhTCXxyCc5upLFYajiEpLZlRmBCfC44d98lC3Ooyl cardno:13 794 712"
       ];
-      extraGroups = [ "wheel" "video" "networkmanager" ];
+      extraGroups = [ "wheel" "video" "networkmanager" "i2c" ];
     };
   };
 
@@ -90,6 +97,8 @@
   
   environment.systemPackages = with pkgs; [
     helix
+    ddcutil
+    ddcui
   ];
   
 
