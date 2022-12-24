@@ -18,8 +18,11 @@ in
   };
 
   desktops.gnome.enable = true;
-  desktops.gnome.swapEscape = true;
+  desktops.gnome.swapEscape = false;
 
+  xdg.enable = true;
+  xdg.dataHome = /persist/user/data;
+  xdg.stateHome = /persist/user/state;
   xdg.userDirs = {
     enable = true;
     createDirectories = true;
