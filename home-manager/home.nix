@@ -62,12 +62,15 @@ in
     rustup
     rust-analyzer
     sass
+    sioyek
     tex
     timg
     yubikey-touch-detector
     wezterm
     zola
   ];
+  programs.direnv.enable = true;
+  programs.direnv.nix-direnv.enable = true;
   programs.fish.enable = true;
   programs.fish.interactiveShellInit = ''
     if test "$TERM" != dumb -a \( -z "$INSIDE_EMACS" -o "$INSIDE_EMACS" = vterm \)
