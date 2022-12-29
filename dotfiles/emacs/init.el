@@ -57,6 +57,17 @@
 (scroll-bar-mode -1)
 (set-frame-parameter nil 'undecorated t) ;; CUrrently doesn't  work in daemon mode
 
+(modify-all-frames-parameters
+ '((right-divider-width . 20)
+   (internal-border-width . 20)))
+(dolist (face '(window-divider
+                window-divider-first-pixel
+                window-divider-last-pixel
+		vertical-border))
+  (face-spec-reset-face face)
+  (set-face-foreground face (face-attribute 'default :background)))
+(set-face-background 'fringe (face-attribute 'default :background))
+
 ;; Fix titlebar for toolbox containers
 (if (string= system-name "toolbox")
     (progn
@@ -80,7 +91,7 @@
 ;; Set wrap to 80 chars
 (setq-default fill-column 80)
 (setq-default visual-fill-column-center-text t)
-(add-hook 'text-mode-hook 'visual-line-mode)
+;;(add-hook 'text-mode-hook 'visual-line-mode)
 (setq-default visual-fill-column-center-text t)
 (add-hook 'visual-line-mode-hook #'visual-fill-column-mode)
 
@@ -133,7 +144,8 @@
 	modus-themes-bold-constructs t
 	modus-themes-intense-mouseovers t
 	modus-themes-paren-match '(bold intense)
-	modus-themes-region '(bg-only no-extend accented))
+	modus-themes-region '(bg-only no-extend accented)
+	modus-themes-fringes nil)
   (modus-themes-load-themes)
   :config
   (modus-themes-load-operandi)
@@ -197,7 +209,8 @@
               (add-hook 'after-save-hook
                         'check-parens
                         nil t))))
-  (add-hook 'markdown-mode-hook #'electric-quote-local-mode) )
+  (add-hook 'markdown-mode-hook #'electric-quote-local-mode)
+  (add-hook 'markdown-mode-hook 'visual-line-mode))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

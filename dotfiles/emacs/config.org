@@ -1,0 +1,244 @@
+#+TITLE: My Emac's Literate Configuration
+#+AUTHOR: Brendan Van Hook
+#+PROPERTY: header-args :tangle yes
+
+* Base
+** Increase startup speed
+The following snippets were taken from [[https://github.com/Bassmann/emacs-config/blob/master/init.el][here]].
+#+begin_src elisp
+
+  ;; Speedup startup by reducing Garbage Collector
+  (setq gc-cons-threshold most-positive-fixnum ; 2^61 bytes
+	gc-cons-percentage 0.6)
+  (setq gc-cons-threshold most-positive-fixnum ; 2^61 bytes
+	gc-cons-percentage 0.6)
+
+  ;; Every file opened and loaded by Emacs will run through this list to check
+  ;; for a proper handler for the file, but during startup, it won’t need any of
+  ;; them.
+  (defvar file-name-handler-alist-original file-name-handler-alist)
+  (setq file-name-handler-alist nil)
+
+  ;; After Emacs startup has been completed, set `gc-cons-threshold' to
+  ;; 16 MB and reset `gc-cons-percentage' to its original value.
+  ;; Also reset `file-name-handler-alist'
+  (add-hook 'emacs-startup-hook
+	    (lambda ()
+	       (setq gc-cons-threshold (* 16 1024 1024)
+		     gc-cons-percentage 0.1
+		     file-name-handler-alist file-name-handler-alist-original)
+	       (makunbound 'file-name-handler-alist-original)))
+#+end_src
+** Handle backup files
+Put the backup files in the XDG data directory and the auto-save files in the
+XDG cache directory. Make the directories if the don't already exist.
+#+begin_src elisp
+  (setq create-lockfiles nil)
+  (setq make-backup-files nil)
+  (let ((backup-dir "~/.local/share/emacs/backups")
+	(auto-saves-dir  "~/.cache/emacs/auto-saves/"))
+	(dolist (dir (list backup-dir auto-saves-dir))
+	  (when (not (file-directory-p dir))
+	    (make-directory dir t)))
+	(setq backup-directory-alist `(("." . ,backup-dir))
+	      auto-save-file-name-transforms `((".*" ,auto-saves-dir t))
+	      auto-save-list-file-prefix (concat auto-saves-dir ".saves-")
+	      tramp-backup-directory-alist `((".*" . ,backup-dir))
+	      tramp-auto-save-directory auto-saves-dir))
+  (setq backup-by-copying t      ; Don't delink hardlinks                           
+	delete-old-versions t    ; Clean up the backups                             
+	version-control t        ; Use version numbers on backups,                  
+	kept-new-versions 5      ; keep some new versions                          
+	kept-old-versions 2)     ; and some old ones, too    
+#+end_src
+** Setup packages
+When using the nix package of emacs all packaging will be handled by nix, so this checks if
+emacs was built with a prefix in ~/nix/store~ and handles packaging accordingly.
+#+begin_src elisp
+  (require 'package)
+  (if (cl-search "/nix/store" system-configuration-options)
+    (progn
+      ;; Force use of emacsPackages from nix
+      (setq package-archives nil)
+      (setq package-enable-at-startup nil))
+  (progn
+    (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages") t)
+    (eval-when-compile (require 'use-package))
+    (require 'use-package-ensure)
+    (setq use-package-always-ensure t)))
+
+(package-initialize)
+#+end_src
+
+* User Interface
+** Frame Setup
+This is to setup frame-specific options. They are are wrapped in a function because they need to be added to the ~after-make-frame-functions~ hook in order for them to work with daemon mode. This hook is only run in daemon mode, so the function also needs to be added to the ~window-setup-hook~ as well.
+#+begin_src elisp
+  (defun my-ui-setup (frame)
+    (set-frame-parameter frame 'undecorated t))
+  (add-hook 'after-make-frame-functions #'my-ui-setup)
+  (add-hook 'server-after-make-frame-functions #'my-ui-setup)
+  (my-ui-setup nil)
+#+end_src
+** Disable unused UI elements
+#+begin_src elisp
+  (setq inhibit-startup-screen t)
+  (tool-bar-mode -1)
+  (menu-bar-mode -1)
+  (scroll-bar-mode -1)
+  (global-unset-key (kbd "C-z")) ;; Prevent GUI from zombieing out
+#+end_src
+** Theme
+#+begin_src elisp
+  ;; Change color of header-line box (used for padding) to background color
+  (defun my-update-colors ()
+    (interactive)
+    (modus-themes-load-themes)
+    (if (eq (modus-themes--current-theme) 'modus-operandi)
+	(face-remap-add-relative 'header-line nil '(:box (:line-width 12 :color "white")))
+      (face-remap-add-relative 'header-line nil '(:box (:line-width 12 :color "black")))))
+  
+  (use-package modus-themes
+    :init
+    (setq modus-themes-italic-constructs t
+	  modus-themes-bold-constructs t
+	  modus-themes-intense-mouseovers t
+	  modus-themes-paren-match '(bold intense)
+	  modus-themes-region '(bg-only no-extend accented)
+	  modus-themes-fringes nil)
+    (modus-themes-load-themes)
+    :config
+    (modus-themes-load-operandi)
+
+    (advice-add 'modus-themes-toggle :after #'my-update-colors)
+    :bind ("<f5>" . modus-themes-toggle))
+#+end_src
+*** Setup org-modern
+~org-modern~ uses dividers to add padding so we need them to match the
+background color of the theme we are using.
+#+begin_src elisp
+  (modify-all-frames-parameters
+   '((right-divider-width . 20)
+     (internal-border-width . 20)))
+  (dolist (face '(window-divider
+		  window-divider-first-pixel
+		  window-divider-last-pixel
+		  vertical-border))
+    (face-spec-reset-face face)
+    (set-face-foreground face (face-attribute 'default :background)))
+  (set-face-background 'fringe (face-attribute 'default :background))
+  (setq
+ ;; Edit settings
+ org-auto-align-tags nil
+ org-tags-column 0
+ org-catch-invisible-edits 'show-and-error
+ org-special-ctrl-a/e t
+ org-insert-heading-respect-content t
+
+ ;; Org styling, hide markup etc.
+ org-hide-emphasis-markers t
+ org-pretty-entities t
+ org-ellipsis "…"
+
+ ;; Agenda styling
+ org-agenda-tags-column 0
+ org-agenda-block-separator ?─
+ org-agenda-time-grid
+ '((daily today require-timed)
+   (800 1000 1200 1400 1600 1800 2000)
+   " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
+ org-agenda-current-time-string
+ "⭠ now ─────────────────────────────────────────────────")
+
+(global-org-modern-mode)
+#+end_src
+*** Header Line
+We want a centered header-line, but there aren't any methods of centering items
+on a header-line so we have to pad a string with spaces.
+#+begin_src elisp
+  (defun center-header-line (text)
+      ;; Determine the number of spaces needed to pad `text`.
+      (let ((left-padding
+	     (/ (- (window-total-width)
+		   (length (format-mode-line text)))
+		2)))
+	;; Prepend the `text` with required # of spaces
+	(concat (format (format "%%%ds"left-padding) "")
+		text)))
+  ;; Return the short path to the file name of current buffer
+  ;; or the buffer name if it isn't a saved file.
+  (defun short-filename-or-buffer ()
+    (if (buffer-file-name)
+	(abbreviate-file-name buffer-file-name)
+      "%b"))
+
+  ;; Set the header-line unless we're in blacklisted modes.
+  (defun set-header-if-needed ()
+    (if (or (string= major-mode "fundamental")
+	    (boundp 'org-capture-mode))
+	nil
+      (setq header-line-format
+	    (center-header-line (short-filename-or-buffer)))))
+  ;; Make sure the header is updated when any changes are made to window size
+  ;; or buffer changes
+  (add-hook 'buffer-list-update-hook 'set-header-if-needed)
+  (add-hook 'window-size-change-functions 'set-header-if-needed)
+#+end_src
+
+(defun mode-line-render (left right)
+  (let* ((available-width (- (window-width) (length left))))
+    (format (format "%%s %%%ds" available-width) left right)))
+** Typography
+*** Base font setup
+#+begin_src elisp
+  (set-face-attribute 'default nil :family "Iosevka Fixed" :height 140)
+  (set-face-attribute 'fixed-pitch nil :family "Iosevka Fixed" :height 1.0)
+  (set-face-attribute 'variable-pitch nil :family "Iosevka" :height 1.0)
+  (set-face-attribute 'mode-line nil :family "Iosevka Fixed" :height 0.8)
+  (set-fontset-font t 'symbol (font-spec :family "Noto Color Emoji") nil 'prepend)
+#+end_src
+*** Extra font setup
+#+begin_src elisp
+  (custom-set-faces
+   '(header-line ((t (:background "inherit" :foreground "#7a7a7a" :slant italic :box (:line-width 12 :color "white"C))))))
+#+end_src
+*** Line settings/wrapping
+#+begin_src elisp
+  (set-fill-column 100)
+  (add-hook 'text-mode-hook 'visual-line-mode)
+  (add-hook 'visual-line-mode-hook 'visual-fill-column-mode)
+#+end_src
+*** Mixed pitch
+#+begin_src elisp
+  (use-package mixed-pitch
+    :hook
+    (text-mode . mixed-pitch-mode))
+#+end_src
+* Orgmode
+** Required Packages
+#+begin_src elisp
+  (use-package org-bullets)
+  (use-package org-modern)
+  (use-package org-protocol)
+  (use-package ox-publish)
+  #+end_src
+** General Settings
+#+begin_src elisp
+#+end_src
+** Math
+#+begin_src elisp
+  (setq org-preview-latex-default-process 'dvisvgm)
+  (setq org-preview-latex-image-directory "~/.cache/org-latex-images/") ; TODO: xdg-cache dir
+  (setq org-latex-packages-alist
+	'(("" "mathtools" t)
+	  ("" "physics" t)))
+#+end_src
+** Babel
+#+begin_src elisp
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((emacs-lisp . t)
+     (shell . t)
+     (python . t)))
+#+end_src
+
