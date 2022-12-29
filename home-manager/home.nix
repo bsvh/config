@@ -4,13 +4,15 @@ let
   user = "bsvh";
   tex = (pkgs.texlive.combine {
     inherit (pkgs.texlive) scheme-basic
-    dvisvgm
-    dvipng
-    wrapfig
     amsmath
-    ulem
+    capt-of
+    dvipng
+    dvisvgm
     hyperref
-    capt-of;
+    mathtools
+    physics
+    ulem
+    wrapfig;
   });
 in
 {
