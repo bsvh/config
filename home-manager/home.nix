@@ -38,6 +38,19 @@ in
     QT_QPA_PLATFORM = "wayland;xcb";
     NIXOS_OZONE_WL = "1";
     EDITOR = "hx";
+    DIRENV_LOG_FORMAT="";
+  };
+  xdg.userDirs = {
+    enable = true;
+    createDirectories = true;
+    desktop = "${config.home.homeDirectory}/desktop";
+    documents = "${config.home.homeDirectory}/documents";
+    download = "${config.home.homeDirectory}/downloads";
+    music = "${config.home.homeDirectory}/music";
+    pictures = "${config.home.homeDirectory}/pictures";
+    videos = "${config.home.homeDirectory}/videos";
+    templates = "${config.home.homeDirectory}/templates";
+    publicShare = "${config.home.homeDirectory}/public";
   };
   home.shellAliases = {
     vim = "hx";
@@ -63,13 +76,11 @@ in
     ripgrep
     rustup
     rust-analyzer
-    sass
     sioyek
     tex
     timg
     yubikey-touch-detector
     wezterm
-    zola
   ];
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
@@ -79,6 +90,7 @@ in
         eval (/home/bsvh/.nix-profile/bin/starship init fish)
     end
     enable_transience
+    set -e LIBVA_DRIVERS_PATH LIBGL_DRIVERS_PATH LD_LIBRARY_PATH __EGL_VENDOR_LIBRARY_FILENAMES
   '';
   programs.emacs.enable = true;
   programs.emacs.package = pkgs.emacsPgtk;
