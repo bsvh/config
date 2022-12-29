@@ -1,4 +1,3 @@
-{ inputs, outputs, lib, config, pkgs, ... }: {
 { inputs, outputs, lib, config, pkgs, ... }:
 let
   nixGLWrap = pkg: pkgs.runCommand "${pkg.name}-nixgl-wrapper" {} ''
