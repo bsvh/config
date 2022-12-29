@@ -21,4 +21,13 @@
     epkgs.writeroom-mode
     epkgs.yuck-mode
    ];
+
+  xdg.desktopEntries.org-protocol = {
+    name = "Org Protocol";
+    exec = "emacsclient %u";
+    terminal = false;
+    type = "Application";
+    categories = [ "System" ];
+    mimeType = [ "x-scheme-handler/org-protocol" ];
+  };
 }
