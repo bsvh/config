@@ -10,7 +10,7 @@ lib.mkIf (desktop.enable == true) {
     adjust-display-brightness
     appindicator
     dash-to-dock
-    gsconnect
+    #gsconnect
     improved-workspace-indicator
     just-perfection
     night-theme-switcher
@@ -166,7 +166,7 @@ lib.mkIf (desktop.enable == true) {
 
     "org/gnome/shell/extensions/pop-shell" = {
       active-hint = true;
-      active-hint-border-radius = mkUint32 1;
+      active-hint-border-radius = mkUint32 15;
       gap-outer = mkUint32 1;
       gap-inner = mkUint32 1;
       tile-by-default = true;
