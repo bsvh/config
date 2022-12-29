@@ -26,8 +26,10 @@ in
   home.packages = with pkgs; [ 
     nixgl.nixGLIntel
     (nixGLWrap obs-studio)
+    ffmpeg-full
    ];
 
+  desktops.gnome.enable = true;
   fonts.fontconfig.enable = true;
 
   programs.kitty.package = nixGLWrap pkgs.kitty;
