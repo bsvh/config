@@ -21,8 +21,6 @@ in
   desktops.gnome.swapEscape = false;
 
   xdg.enable = true;
-  xdg.dataHome = /persist/user/data;
-  xdg.stateHome = /persist/user/state;
   xdg.userDirs = {
     enable = true;
     createDirectories = true;
