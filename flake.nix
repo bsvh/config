@@ -46,6 +46,11 @@
       ];
     in 
     rec {
+      packages = forAllSystems (system:
+        let pkgs = nixpkgs.legacyPackages.${system};
+        in import ./pkgs { inherit pkgs; }
+      );
+      overlays = import ./overlays;
       nixosConfigurations = {
         ubik = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs hyprland vars; };

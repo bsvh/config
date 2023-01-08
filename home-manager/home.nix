@@ -1,4 +1,4 @@
-{ config, pkgs, lib, inputs, ... }:
+{ config, pkgs, lib, inputs, outputs, ... }:
 
 let
   user = "bsvh";
@@ -23,6 +23,8 @@ in
   nixpkgs = {
     overlays = [
       inputs.emacs-overlay.overlay
+      outputs.overlays.modifications
+      outputs.overlays.additions
     ];
     config = {
       allowUnfree = true;
@@ -65,6 +67,7 @@ in
     fzf
     gcc
     hack-font
+    hack-ligatured
     htop
     httm
     iosevka-bin
