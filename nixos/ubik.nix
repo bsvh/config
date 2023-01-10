@@ -40,6 +40,9 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  virtualisation.podman.enable = true;
+  virtualisation.libvirtd.enable = true;
+  programs.dconf.enable = true;
   zramSwap.enable = true;
 
   hardware.i2c.enable = true;
@@ -81,7 +84,7 @@
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINJLhTCXxyCc5upLFYajiEpLZlRmBCfC44d98lC3Ooyl cardno:13 794 712"
       ];
-      extraGroups = [ "wheel" "video" "networkmanager" "i2c" ];
+      extraGroups = [ "wheel" "video" "networkmanager" "i2c" "libvirtd" ];
     };
   };
 
@@ -101,6 +104,9 @@
     helix
     ddcutil
     ddcui
+    distrobox
+    virt-manager
+    virtiofsd
     framework-ectool
   ];
 
