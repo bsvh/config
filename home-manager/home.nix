@@ -269,15 +269,18 @@ in
       Hidden=true
     '';
   };
-  xdg.configFile."start-yubikey-touch-detector" = {
-    target = "autostart/yubikey-touch-detector.desktop";
-    text = ''
-      [Desktop Entry]
-      Type=Application
-      Name=Yubikey Touch Detector
-      Exec=yubikey-touch-detector -libnotify
-      Comment=Start Yubikey Touch Detector
-    '';
+
+  systemd.user.services."yubikey-touch-detector" = {
+    Unit = {
+      Description = "Start yubikey-touch-detector";
+    };
+    Install = {
+      WantedBy = [ "default.target" ];
+    };
+    Service= {
+      ExecStart = "${pkgs.yubikey-touch-detector}/bin/yubikey-touch-detector -libnotify";
+      Type = "simple";
+    };
   };
 
   programs.kitty = {
