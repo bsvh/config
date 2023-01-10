@@ -10,6 +10,8 @@
 
   nixpkgs = {
     overlays = [
+      outputs.overlays.modifications
+      outputs.overlays.additions
     ];
     config = {
       allowUnfree = true;
@@ -99,7 +101,20 @@
     helix
     ddcutil
     ddcui
+    framework-ectool
   ];
+
+  systemd.services."framework-swapescape" = {
+    enable = true;
+    script = ''
+      ${pkgs.framework-ectool}/bin/fw-ectool raw 0x3E0c d1,d1,b4,b4,w76
+      ${pkgs.framework-ectool}/bin/fw-ectool raw 0x3E0c d1,d1,b7,b5,w58
+    '';
+    wantedBy = [ "multi-user.service" ];
+    serviceConfig = {
+      Type = "oneshot";
+    };
+  };
   
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
